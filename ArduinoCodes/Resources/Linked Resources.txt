@@ -1,0 +1,2 @@
+AS5600 Magnetic Position Sensor Library
+https://github.com/kanestoboi/AS5600
