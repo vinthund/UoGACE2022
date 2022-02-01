@@ -3,10 +3,10 @@
  * 
  * Version: 1.1.1
 */
+String command;
 #define ENA 2
 #define IN1 3
 #define IN2 4
-String command;
 
 void setup() {
   pinMode(IN1,OUTPUT);
