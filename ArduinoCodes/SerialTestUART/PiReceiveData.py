@@ -20,5 +20,5 @@ if __name__ == '__main__':
                 ser.write(b"positive\n")
             elif float(line) < 400:
                 ser.write(b"negative\n")
-            elif float(line) > 600 or float(line) < 400:
+            elif float(line) < 600 or float(line) > 400:
                 ser.write(b"off\n")
