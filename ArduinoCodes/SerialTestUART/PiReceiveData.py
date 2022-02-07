@@ -1,7 +1,7 @@
 #Note: This Code is only a Test Environment for Serial Communication to the Arduino. Commands are sent from here through Serial in order to control the Arduino
 #Currently, this code sends commands to control the spin direction of a fan conncted to an H bridge, when the command is "positive" it spins clockwise, and "negative" spins
 #counter clockwise. Of course, these commands are only sent to the Arduino when the conditions are achieved.
-#Version 1.1.3
+#Version 1.3
 
 import serial
 import time

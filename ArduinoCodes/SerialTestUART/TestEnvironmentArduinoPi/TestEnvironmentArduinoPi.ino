@@ -1,7 +1,7 @@
 /*This code was taken and modified from my (Joel) Individual project. This code basically manipulates an H bridge whenever receiving commands from Python, flipping polarity depending on the type
  * of command given e.g. "positive", "negative" and "off".
  * 
- * Version: 1.1.3
+ * Version: 1.3
 */
 String command;
 #define ENA 2
@@ -33,12 +33,7 @@ void loop() {
       Serial.println("Requesting Connection");
       counter -=1;
     }
-    if (command.equals("Connection Established") && counter == 0 ) {
-      while (counter == 0) {
-        Serial.println("Arduino Active");
-        delay(4000);
-      }
-    }
+    
     // Conditional statements that check the outputs given from "command"; if it is positive, then set IN1 HIGH, if the response is negative then set IN2 HIGH instead.
     if (command.equals("positive")) {
       digitalWrite(ENA, HIGH);
@@ -59,5 +54,8 @@ void loop() {
     }
   }
   //Delays by 0.1 seconds
-  delay(3000);
+  delay(800);
+  if (counter == 0) {
+    Serial.println("Arduino Connected");
+  }
 }
