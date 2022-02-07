@@ -1,7 +1,7 @@
 #Note: This Code is only a Test Environment for Serial Communication to the Arduino. Commands are sent from here through Serial in order to control the Arduino
 #Currently, this code sends commands to control the spin direction of a fan conncted to an H bridge, when the command is "positive" it spins clockwise, and "negative" spins
 #counter clockwise. Of course, these commands are only sent to the Arduino when the conditions are achieved.
-#Version 1.2
+#Version 1.1.3
 
 import serial
 import time
@@ -26,4 +26,4 @@ if __name__ == '__main__':
             else:
                 if str(line) == "Requesting Connection":
                     print("Device Has Been Acknowledged\n")
-                    ser.write(b"Device Has Been Acknowledged\n")
+                    ser.write(b"Connection Established\n")
