@@ -1,12 +1,13 @@
 /*This code was taken and modified from my (Joel) Individual project. This code basically manipulates an H bridge whenever receiving commands from Python, flipping polarity depending on the type
  * of command given e.g. "positive", "negative" and "off".
  * 
- * Version: 1.1.1
+ * Version: 1.1.2
 */
 String command;
 #define ENA 2
 #define IN1 3
 #define IN2 4
+int counter = 1;
 
 void setup() {
   pinMode(IN1,OUTPUT);
@@ -28,6 +29,11 @@ void loop() {
     command = Serial.readStringUntil('\n');
     command.trim();
 
+    if (counter == 1) {
+      Serial.println("Requesting Connection");
+      counter -=1;
+    }
+
     // Conditional statements that check the outputs given from "command"; if it is positive, then set IN1 HIGH, if the response is negative then set IN2 HIGH instead.
     if (command.equals("positive")) {
       digitalWrite(ENA, HIGH);
@@ -48,5 +54,5 @@ void loop() {
     }
   }
   //Delays by 0.1 seconds
-  delay(100);
+  delay(3000);
 }
