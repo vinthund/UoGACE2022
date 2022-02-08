@@ -1,3 +1,8 @@
+#Note: This Code is only a Test Environment for Serial Communication to the Arduino. Commands are sent from here through Serial in order to control the Arduino
+#Currently, this code sends commands to control the spin direction of a fan conncted to an H bridge, when the command is "positive" it spins clockwise, and "negative" spins
+#counter clockwise. Of course, these commands are only sent to the Arduino when the conditions are achieved.
+#Version 1.1
+
 import serial
 import time
 from time import sleep
@@ -15,6 +20,5 @@ if __name__ == '__main__':
                 ser.write(b"positive\n")
             elif float(line) < 400:
                 ser.write(b"negative\n")
-            elif float(line) < 600 or float(line) < 400:
+            elif float(line) < 600 or float(line) > 400:
                 ser.write(b"off\n")
-        
