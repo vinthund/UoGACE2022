@@ -63,4 +63,7 @@ void loop()
         panStepper.moveTo(-i_tiltTargetPosition);
     }
 
+    panStepper.run();
+    tiltStepper.run();
+    
 } //end of 'loop'
