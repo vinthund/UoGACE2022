@@ -6,6 +6,8 @@
 #define stepper 3
 //#define button 13
 
+#define vmaxPWM 30
+
 Servo servo;
 ramp motorRamp;
 
@@ -23,18 +25,15 @@ void setup() {
   pinMode(stepper, OUTPUT);
   
   pinMode(motors_pin, OUTPUT);
-  digitalWrite(motors_pin, HIGH);
+  digitalWrite(motors_pin, LOW);
 
-  //Enable Fast PWM
-  TCCR2A = _BV(COM2A1) | _BV(COM2B1) | _BV(WGM21) | _BV(WGM20);
-  TCCR2B = _BV(CS20);
-
-  motorRamp.go(80, 5000);
+  delay(2000);
+  motorRamp.go(vmaxPWM, 5000);
 }
 
 void loop() {
 
-  analogWrite(motors_pin, 200);
+  analogWrite(motors_pin, motorRamp.update());
 
   //Spinning Stepper Motor
   /*digitalWrite(stepper, LOW);
