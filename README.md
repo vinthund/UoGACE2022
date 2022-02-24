@@ -15,24 +15,25 @@ Mechanical parts of this project are mostly custom using standard industry parts
 *System Concept Block Diagram*
 
 ## **Contributors**
-- [Andrew Dean - ad4646d](www.github.com/ad4646d)
-- [Chris Halsall - ch6941r -](www.github.com/ch6941r)  [AfterEarthLtd](www.github.com/AfterEarthLTD)
-- [vinthund](www.github.com/vinthund)
-- [ht5640k](www.github.com/ht5640k)
-- [JoelSmalls](www.github.com/JoelSmalls)
-- [kamyar123](www.github.com/kamyar123)
-- [Naojortsac](www.github.com/Naojortsac)
-- [rowBoat](www.github.com/rowboat)
+
+- [Andrew Dean - ad4646d](https://www.github.com/ad4646d)
+- [Chris Halsall - ch6941r -](https://www.github.com/ch6941r)  [AfterEarthLtd](https://www.github.com/AfterEarthLTD)
+- [vinthund](https://www.github.com/vinthund)
+- [ht5640k](https://www.github.com/ht5640k)
+- [JoelSmalls](https://www.github.com/JoelSmalls)
+- [kamyar123](https://www.github.com/kamyar123)
+- [Naojortsac](https://www.github.com/Naojortsac)
+- [rowBoat](https://www.github.com/rowboat)
 <br>
 
 
-## **Firing Mechanism Mechanical Design** - [Chris Halsall - ch6941r](www.github.com/ch6941r)
+## **Firing Mechanism Mechanical Design** - [Chris Halsall - ch6941r](https://www.github.com/ch6941r)
 
 The firing mechanism contains a few pre-made parts including a small stepper motor, the firing motors and barrel, a servo, and a bearing. All other parts have been designed in Fusion 360 and printed in orange PLA on an Ender 3 FDM 3D printer. It features a 12 dart rotary magazine driven by the stepper motor from one end and supported by a bearing at the other end. Through the bearing is mounted a magnet and a magnetic position sensor so that the control electronics can measure the angle of the magazine. A servo is mounted in the base and, with a custom arm, is capable of pushing a dart from the magazine into the firing motors and thus propelling it out of the barrel. A mounting plate is attached to the front of the design to securely mount the camera for machine vision. Finally, a hole and hex slot has been designed in to allow for easy mounting to the pan/tilt mehcanism.
 <br>
 <br>
 
-## **Pan-Tilt Mechanism Mechanical Design** - [Andrew Dean - ad4646d](www.github.com/ad4646d)
+## **Pan-Tilt Mechanism Mechanical Design** - [Andrew Dean - ad4646d](https://www.github.com/ad4646d)
 
 The [pan-tilt mechanism](https://github.com/vinthund/UoGACE2022/tree/main/Pan-TiltAssembly) is a bespoke 3D printed mechanism that was designed in tandem with bespoke the [firing mechanism](https://github.com/vinthund/UoGACE2022/tree/ad4646d/3D%20Designs/Firing%20Mech) using AutoDesk Fusion 360.
 
@@ -65,44 +66,46 @@ A [lazy susan bearing](https://www.stilesandbates.co.uk/75mm-square-lazy-susan-b
 The full parts list for the pan-tilt mechanism can be found [here](https://github.com/vinthund/UoGACE2022/blob/ad4646d/Pan-TiltAssembly/Documentation/Pan-Tilt%20Head%20Parts%20List.pdf).\
 STEP files for the pan-tilt mechanism can be found [here](https://github.com/vinthund/UoGACE2022/tree/main/Pan-TiltAssembly/CAD_Files).
 
-
-
-
-
 <br>
 
 
-## **Firing Mechanism Communications** - [JoelSmalls](www.github.com/JoelSmalls)
+## **Firing Mechanism Communications** - [JoelSmalls](https://www.github.com/JoelSmalls)
 
 ***Add your summary of work here and delete this comment.***
 
 <br>
 
-## **Pan/Tilt Mechanism Communicatons** - [ht5640k](www.github.com/ht5640k)
+## **Pan/Tilt Mechanism Communicatons** - [ht5640k](https://www.github.com/ht5640k)
 
 ***Add your summary of work here and delete this comment.***
 
 <br>
 
-## **Machine Vision Target Aquisition** - [vinthund](www.github.com/vinthund)
+## **Machine Vision Target Aquisition** - [vinthund](https://www.github.com/vinthund)
 
 ***Add your summary of work here and delete this comment.***
 
 <br>
 
-## **Web Server and Website** - [rowBoat](www.github.com/rowboat)
+## **Web Server and Website** - [rowBoat](https://www.github.com/rowboat)
 
 ***Add your summary of work here and delete this comment.***
 
 <br>
 
-## **Project Management** - [Andrew Dean - ad4646d](www.github.com/ad4646d) & [Chris Halsall - ch6941r](www.github.com/ch6941r)
+## **Android App** - [kamyar123](https://www.github.com/kamyar123)
 
 ***Add your summary of work here and delete this comment.***
 
 <br>
 
-## **GitHub Management** - [vinthund](www.github.com/vinthund)
+## **Project Management** - [Andrew Dean - ad4646d](https://www.github.com/ad4646d) & [Chris Halsall - ch6941r](https://www.github.com/ch6941r)
+
+***Add your summary of work here and delete this comment.***
+
+<br>
+
+## **GitHub Management** - [vinthund](https://www.github.com/vinthund)
 
 ***Add your summary of work here and delete this comment.***
 
