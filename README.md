@@ -22,7 +22,6 @@ Mechanical parts of this project are mostly custom using standard industry parts
 - [ht5640k](https://www.github.com/ht5640k)
 - [JoelSmalls](https://www.github.com/JoelSmalls)
 - [kamyar123](https://www.github.com/kamyar123)
-- [Naojortsac](https://www.github.com/Naojortsac)
 - [rowBoat](https://www.github.com/rowboat)
 <br>
 
