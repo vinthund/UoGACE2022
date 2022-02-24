@@ -32,31 +32,53 @@ The firing mechanism contains a few pre-made parts including a small stepper mot
 
 ## **Pan/Tilt Mechanism Mechanical Design** - [Andrew Dean - ad4646d](www.github.com/ad4646d)
 
-
+***Add your summary of work here and delete this comment.***
 
 <br>
-<br>
-
+<br> 
 
 ## **Firing Mechanism Communications** - [JoelSmalls](www.github.com/JoelSmalls)
 
+***Add your summary of work here and delete this comment.***
 
+<br>
+<br> 
 
 ## **Pan/Tilt Mechanism Communicatons** - [ht5640k](www.github.com/ht5640k)
 
+***Add your summary of work here and delete this comment***
+
+<br>
+<br> 
+
 ## **Machine Vision Target Aquisition** - [vinthund](www.github.com/vinthund)
 
-@vinthund
+***Add your summary of work here and delete this comment***
 
-## Web Server and Website - 
+<br>
+<br> 
 
-@Kamyar
+## **Web Server and Website** - [rowBoat](www.github.com/rowboat)
 
-#### Project and Github Management
+***Add your summary of work here and delete this comment***
 
-@ad4646d
-@vinthund
+<br>
+<br> 
 
-## License
+## **Project Management** - [Andrew Dean - ad4646d & ](www.github.com/ad4646d) [Chris Halsall - ch6941r](www.github.com/ch6941r)
+
+***Add your summary of work here and delete this comment***
+
+<br>
+<br> 
+
+## **GitHub Management** - [vinthund](www.github.com/vinthund)
+
+***Add your summary of work here and delete this comment***
+
+<br>
+<br> 
+
+# **License**
 
 Due to the sensitive nature of projectile firing technology, much thought has gone into the ethics of releasing a publically available repository with details of how the project was created. Please note that the content contained within this repository should be used solely for EDUCSTION purposes. For full details please see the [License](LICENSE) document found in the root of this repository. This license has been based upon the MIT license.
