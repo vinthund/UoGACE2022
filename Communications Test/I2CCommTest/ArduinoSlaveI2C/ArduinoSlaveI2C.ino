@@ -1,9 +1,9 @@
 /*This code was taken and modified from my (Joel) Individual project. This code basically manipulates an H bridge whenever receiving commands from Python, flipping polarity depending on the type
    of command given e.g. "positive", "negative" and "off". This is the I2C Version of the UART code made earlier.
- * SDA <--> SDA
- * SCL <--> SCL
- * GND <--> GND
- * Version: 1.2
+   SDA <--> SDA
+   SCL <--> SCL
+   GND <--> GND
+   Version: 1.2.1
 */
 
 // Include the Wire library for I2C
@@ -35,38 +35,45 @@ void receiveEvent(int howMany) {
   while (Wire.available()) { // loop through all but the last
     //char c = Wire.read(); // receive byte as a character, char converts unicode to character
     received_str += (char)Wire.read();
-    Serial.print(received_str);
+    //Serial.print(received_str);
     //digitalWrite(ledPin, c);
   }
 }
 
 // Function that sends data to Master (Pi)
 void sendData(int msg)
-  {
+{
   Wire.write(msg);
-  }
+}
 
 void loop() {
   delay(100);
   //int sensorValue = analogRead(A0);
   //sendData(sensorValue);
-  received_str = "";
-  Serial.println();
+  if (isDigit(received_str) ) {
+    Serial.print(received_str);
+    Serial.println();
+    received_str = "";
+  } else {
+    Serial.print("Characters not allowed!");
+    Serial.println();
+    received_str = "";
+  }
 }
 
 /*
- * Below are the codes that are being used as inspiration to improve bi-directional communication between the Arduino and the Raspberry Pi. They were found online from others who also worked 
- * on I2C communication.
- * 1: https://www.aranacorp.com/en/communication-between-raspberry-pi-and-arduino-with-i2c/
- * 2: https://roboticsbackend.com/raspberry-pi-master-arduino-slave-i2c-communication-with-wiringpi/
- * 3: https://www.thegeekpub.com/18263/raspberry-pi-to-arduino-i2c-communication/
- */
+   Below are the codes that are being used as inspiration to improve bi-directional communication between the Arduino and the Raspberry Pi. They were found online from others who also worked
+   on I2C communication.
+   1: https://www.aranacorp.com/en/communication-between-raspberry-pi-and-arduino-with-i2c/
+   2: https://roboticsbackend.com/raspberry-pi-master-arduino-slave-i2c-communication-with-wiringpi/
+   3: https://www.thegeekpub.com/18263/raspberry-pi-to-arduino-i2c-communication/
+*/
 
 
 
 
 /* Code 2:
- * #include <Wire.h>
+   #include <Wire.h>
 
   #define SLAVE_ADDRESS 0x08
 
