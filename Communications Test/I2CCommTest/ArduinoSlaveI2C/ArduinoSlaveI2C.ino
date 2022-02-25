@@ -14,6 +14,7 @@
 #define IN2 4
 #define ledPin 13
 bool count = false;
+String received_str = "";
 
 
 void setup() {
@@ -32,64 +33,36 @@ void setup() {
 // Function that executes whenever data is received from master
 void receiveEvent(int howMany) {
   while (Wire.available()) { // loop through all but the last
-
-    char c = Wire.read(); // receive byte as a character
-    Serial.print(c);
-    digitalWrite(ledPin, c);
-
+    //char c = Wire.read(); // receive byte as a character, char converts unicode to character
+    received_str += (char)Wire.read();
+    Serial.print(received_str);
+    //digitalWrite(ledPin, c);
   }
 }
 
+// Function that sends data to Master (Pi)
+void sendData(int msg)
+  {
+  Wire.write(msg);
+  }
+
 void loop() {
   delay(100);
-  //Serial.print("Hello World");
+  //int sensorValue = analogRead(A0);
+  //sendData(sensorValue);
+  received_str = "";
+  Serial.println();
 }
 
 /*
  * Below are the codes that are being used as inspiration to improve bi-directional communication between the Arduino and the Raspberry Pi. They were found online from others who also worked 
  * on I2C communication.
- * Source for Code 1: https://www.aranacorp.com/en/communication-between-raspberry-pi-and-arduino-with-i2c/
- * Source for Code 2: https://roboticsbackend.com/raspberry-pi-master-arduino-slave-i2c-communication-with-wiringpi/
+ * 1: https://www.aranacorp.com/en/communication-between-raspberry-pi-and-arduino-with-i2c/
+ * 2: https://roboticsbackend.com/raspberry-pi-master-arduino-slave-i2c-communication-with-wiringpi/
+ * 3: https://www.thegeekpub.com/18263/raspberry-pi-to-arduino-i2c-communication/
  */
 
 
-/*
- * Code 1:
-  #include <Wire.h>
-  #define I2C_SLAVE_ADDRESS 0x08
-  #define PAYLOAD_SIZE 2
-  void setup()
-  {
-  Wire.begin(I2C_SLAVE_ADDRESS);
-  Serial.begin(9600);
-  Serial.println("-------------------------------------I am Slave1");
-  delay(1000);
-  Wire.onRequest(requestEvents);
-  Wire.onReceive(receiveEvents);
-  }
-
-
-  void loop() {}
-  int n = 0;
-  void requestEvents()
-  {
-  Serial.println(F("---> recieved request"));
-  Serial.print(F("sending value : "));
-  Serial.println(n);
-  Wire.write(n);
-  }
-  void receiveEvents(int numBytes)
-  {
-  Serial.println(F("---> recieved events"));
-  n = Wire.read();
-  Serial.print(numBytes);
-  Serial.println(F("bytes recieved"));
-  Serial.print(F("recieved value : "));
-  Serial.println(n);
-  }
-
-
-*/
 
 
 /* Code 2:
