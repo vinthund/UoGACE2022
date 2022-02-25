@@ -1,6 +1,8 @@
 /*This code was taken and modified from my (Joel) Individual project. This code basically manipulates an H bridge whenever receiving commands from Python, flipping polarity depending on the type
  * of command given e.g. "positive", "negative" and "off". This is the I2C Version of the UART code made earlier.
- * 
+ * SDA <--> SDA
+ * SCL <--> SCL
+ * GND <--> GND
  * Version: 1
 */
 
