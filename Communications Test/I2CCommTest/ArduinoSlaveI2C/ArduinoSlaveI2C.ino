@@ -3,7 +3,7 @@
  * SDA <--> SDA
  * SCL <--> SCL
  * GND <--> GND
- * Version: 1.1
+ * Version: 1.2
 */
 
 // Include the Wire library for I2C
