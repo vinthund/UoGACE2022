@@ -3,7 +3,10 @@
    SDA <--> SDA
    SCL <--> SCL
    GND <--> GND
-   Version: 1.2.1
+   Version: 1.2.2 -- Changes include fixes to code that did not allow it to display information sent from Pi properly. Other
+   - changes include using "toInt" to convert incoming numbers from Pi to an integer. Most notable use of this function is its ability
+   - to convert anything other than a number to 0, allowing it to be utilised in conditions to print the received
+   - number or just print blank spaces.
 */
 
 // Include the Wire library for I2C
@@ -50,12 +53,14 @@ void loop() {
   delay(100);
   //int sensorValue = analogRead(A0);
   //sendData(sensorValue);
-  if (isDigit(received_str) ) {
+  int n = received_str.toInt();
+  //Serial.print(n);
+  if (n > 0) {
     Serial.print(received_str);
     Serial.println();
     received_str = "";
   } else {
-    Serial.print("Characters not allowed!");
+    //Serial.print("Characters not allowed!");
     Serial.println();
     received_str = "";
   }
