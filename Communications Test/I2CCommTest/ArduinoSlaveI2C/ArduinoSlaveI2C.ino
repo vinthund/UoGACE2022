@@ -1,31 +1,33 @@
-/*This code was taken and modified from my (Joel) Individual project. This code basically manipulates an H bridge whenever receiving commands from Python, flipping polarity depending on the type
-   of command given e.g. "positive", "negative" and "off". This is the I2C Version of the UART code made earlier.
-   SDA <--> SDA
-   SCL <--> SCL
-   GND <--> GND
-   Version: 1.2.2 -- Changes include fixes to code that did not allow it to display information sent from Pi properly. Other
-   - changes include using "toInt" to convert incoming numbers from Pi to an integer. Most notable use of this function is its ability
-   - to convert anything other than a number to 0, allowing it to be utilised in conditions to print the received
-   - number or just print blank spaces.
+/* I2C Communication Code 
+ *  Tested between Arduino and its Master, (Currently Raspberry Pi). 
+ *  Communication contents will consist of status codes to update the Raspberry Pi of its current status, and vice versa.
+ *  SDA <--> SDA
+ *  SCL <--> SCL
+ *  GND <--> GND
+ *  
+ *  Version: 1.3.0
 */
 
 // Include the Wire library for I2C
 #include <Wire.h>
 
+// Definition of H Bridge, LED pins and integers
 #define ENA 2
 #define IN1 3
 #define IN2 4
 #define ledPin 13
-bool count = false;
 String received_str = "";
+int hhe = 50; // Although not seen on code, this was used as a test number to see if communication could be established between Raspberry Pi and Arduino
 
 
 void setup() {
   // Join I2C bus as slave with address 8
   Wire.begin(0x8);
 
-  // Call receiveEvent when data received
+  // Call receiveEvent when data received and requestEvent when data is to be sent
   Wire.onReceive(receiveEvent);
+  Wire.onRequest(requestEvent);
+  
   //pinMode definitons for H bridge to be possibly used for later.
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
@@ -36,73 +38,29 @@ void setup() {
 // Function that executes whenever data is received from master
 void receiveEvent(int howMany) {
   while (Wire.available()) { // loop through all but the last
-    //char c = Wire.read(); // receive byte as a character, char converts unicode to character
+    // receive byte as a character, char converts unicode to character and add these characters into string
     received_str += (char)Wire.read();
-    //Serial.print(received_str);
-    //digitalWrite(ledPin, c);
   }
 }
 
-// Function that sends data to Master (Pi)
-void sendData(int msg)
-{
-  Wire.write(msg);
+// Function that sends data to Master (Pi). Unlike receiveEvent, the Wire.available confirmation loop cannot be used as it stops data being sent.
+void requestEvent() {
+    int sensorValue = analogRead(A0); // Data from potentiometer to be sent to Pi as a Test
+    Wire.write(sensorValue);
 }
 
 void loop() {
   delay(100);
-  //int sensorValue = analogRead(A0);
-  //sendData(sensorValue);
+  int sensorValue = analogRead(A0);
+  Serial.println(sensorValue);
   int n = received_str.toInt();
-  //Serial.print(n);
-  if (n > 0) {
+
+  if (n > 0) { //Data Conversion utilised in a sense that when n is at 0, meaning that it is a character, does not get outputted, else print the number and reset.
     Serial.print(received_str);
     Serial.println();
     received_str = "";
   } else {
-    //Serial.print("Characters not allowed!");
-    Serial.println();
     received_str = "";
   }
+  
 }
-
-/*
-   Below are the codes that are being used as inspiration to improve bi-directional communication between the Arduino and the Raspberry Pi. They were found online from others who also worked
-   on I2C communication.
-   1: https://www.aranacorp.com/en/communication-between-raspberry-pi-and-arduino-with-i2c/
-   2: https://roboticsbackend.com/raspberry-pi-master-arduino-slave-i2c-communication-with-wiringpi/
-   3: https://www.thegeekpub.com/18263/raspberry-pi-to-arduino-i2c-communication/
-*/
-
-
-
-
-/* Code 2:
-   #include <Wire.h>
-
-  #define SLAVE_ADDRESS 0x08
-
-  byte data_to_echo = 0;
-
-  void setup()
-  {
-  Wire.begin(SLAVE_ADDRESS);
-
-  Wire.onReceive(receiveData);
-  Wire.onRequest(sendData);
-  }
-
-  void loop() { }
-
-  void receiveData(int bytecount)
-  {
-  for (int i = 0; i < bytecount; i++) {
-    data_to_echo = Wire.read();
-  }
-  }
-
-  void sendData()
-  {
-  Wire.write(data_to_echo);
-  }
-*/
