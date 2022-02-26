@@ -8,7 +8,7 @@
 * Although the code could be utilised to send characters instead of numbers, it is overall better to use numbers so as to reduce bandwidth and keep
 * communication speed high.
 *
-* Version 1.1.1
+* Version 1.4.0
 """
 
 import time
