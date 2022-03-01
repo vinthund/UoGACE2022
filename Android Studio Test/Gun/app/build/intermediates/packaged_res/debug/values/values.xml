@@ -1,13 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="http://schemas.android.com/tools">
     <color name="black">#FF000000</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="orange">#eb8334</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
+    <color name="red">#ff0000</color>
+    <color name="signupColor">#066e8a</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">Gun</string>
+    <string name="default_web_client_id" translatable="false">398142216374-hbi6v3mkgmjegon1j9nmh1uk73vf9aag.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">398142216374</string>
+    <string name="google_api_key" translatable="false">AIzaSyA643H5osNXXQXg-fx8EJZLd0NKzYQUDwQ</string>
+    <string name="google_app_id" translatable="false">1:398142216374:android:976ee73629b0c2278cae17</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyA643H5osNXXQXg-fx8EJZLd0NKzYQUDwQ</string>
+    <string name="google_storage_bucket" translatable="false">nerfgun-8575b.appspot.com</string>
+    <string name="project_id" translatable="false">nerfgun-8575b</string>
     <style name="Theme.Gun" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
