@@ -1,8 +1,5 @@
-# **Machine Vision Foam Dart Turret**
-
-### **UoG Advanced Computer Engineering Project 2021/22**
+![Title Image](https://github.com/vinthund/UoGACE2022/blob/ad4646d/Pan-TiltAssembly/Documentation/Assets/Title_Image.jpg?raw=true)
 <br>
-
 ## **About the Project**
 
 This project has been developed by the contributors below as a submission of coursework for the University of Greenwich Advanced Computer Engineering Module, academic year 2021/22.
