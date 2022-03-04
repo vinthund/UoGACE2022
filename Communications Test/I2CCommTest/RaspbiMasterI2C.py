@@ -66,10 +66,8 @@ def main():
     while True:
         count +=1
         if count == 10:
-            #os.system('cls' if os.name == 'nt' else 'clear')
             os.system('clear')
             count = 0
-        #i2cRead()
         #msg = input("Send message to Arduino \n" + "> ")
         #print("...")
         #statusCodes()
