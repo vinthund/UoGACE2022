@@ -8,32 +8,41 @@
 * Although the code could be utilised to send characters instead of numbers, it is overall better to use numbers so as to reduce bandwidth and keep
 * communication speed high.
 *
-* Version 1.5.1
-* Recent Amendments: Removal of encoding variable, amendment made to statusCode function, statusCodes does not work as of yet.
-* Status Codes function works similar to API Status calls, so instead of sending words over I2C, numbers are instead sent and these numbers are given conditions. 
+* Version 1.9.2
+* Changes made:
+* Printing from Arduino, removal of redundancy by putting "send message to arduino" on input prompt.
+* Replacement of while loop in i2cRead function to for loop, to increase program efficiency and lower risk of program crash.
+* Additional changes made to i2cRead funtion being conversion of data variable into an integer. This is for the - 
+(continuation) sole purpose of using the output numbers for the status codes function.
+* Bug Fixes: Removal of "print" within i2cRead function due to it breaking code in earlier instances, as it could not convert
+* data to integer when called elsewhere from code.
+* Addition of OS module for communication between Python and Operating System, this is utilised in this instance-
+(continuation) to clear the terminal to reduce system slow downs.
 """
 
 import time
-from smbus import SMBus
+import os
+from smbus2 import SMBus
+count = 0
 
 
 clientAddr = 0x08
 bus = SMBus(1)
 
-def i2cWrite(msg):
-  for c in msg:
-    bus.write_byte(clientAddr, ord(c))
-  return -1
-
-def i2cRead():
-    while True:
+def i2cRead(): 
+    for i in str(bus.read_byte(clientAddr)):
         data = bus.read_byte(clientAddr)
-        #print("From Arduino: %02d" % data)
-        time.sleep(1)
+        time.sleep(0.5)
+    return int(data)
+
+def i2cWrite(msg):
+    for c in msg:
+        bus.write_byte(clientAddr, ord(c))
+    return -1
         
 def statusCodes():
     n = i2cRead()
-    if n == 1:
+    if n == 0:
         print("Arduino: Connection Established")
     elif n == 2:
         print("Arduino: Data Received!")
@@ -49,17 +58,24 @@ def statusCodes():
         print("Arduino: Mechanical Error!")
     else:
         print("Arduino Status Unknown")
+        #time.sleep(1)
     
 
 def main():
-  print("Send message to Arduino")
-  while True:
-    #print(data)
-    msg = input("> ")
-    print("...")
-    i2cWrite(msg)
-    #i2cRead()
-    #statusCodes()
+    count = 0
+    while True:
+        count +=1
+        if count == 10:
+            #os.system('cls' if os.name == 'nt' else 'clear')
+            os.system('clear')
+            count = 0
+        #i2cRead()
+        #msg = input("Send message to Arduino \n" + "> ")
+        #print("...")
+        #statusCodes()
+        print(i2cRead())
+        #i2cWrite(msg)
+
     
 
 if __name__ == "__main__":
