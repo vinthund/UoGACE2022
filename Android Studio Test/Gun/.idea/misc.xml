@@ -3,17 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Gun21/Gun/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.14" />
-        <entry key="..\:/Gun21/Gun/app/src/main/res/layout/activity_login.xml" value="0.10536980749746708" />
-        <entry key="app/src/main/res/drawable/layout_bg.xml" value="0.227" />
-        <entry key="app/src/main/res/drawable/shapeemail.xml" value="0.227" />
-        <entry key="app/src/main/res/drawable/shapelogin.xml" value="0.227" />
-        <entry key="app/src/main/res/drawable/shapesignup.xml" value="0.227" />
-        <entry key="app/src/main/res/layout/activity_launch.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_live.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.182518115942029" />
-        <entry key="app/src/main/res/layout/activity_register.xml" value="0.1" />
+        <entry key="..\:/Project/Android/NerfGun/app/src/main/res/layout/activity_live.xml" value="0.2441123188405797" />
+        <entry key="..\:/Project/Android/NerfGun/app/src/main/res/layout/activity_main.xml" value="0.22" />
+        <entry key="..\:/Project/Android/NerfGun/app/src/main/res/layout/activity_signin.xml" value="0.1" />
+        <entry key="..\:/Project/Android/NerfGun/app/src/main/res/layout/activity_signup.xml" value="0.1" />
       </map>
     </option>
   </component>
