@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="default_web_client_id" translatable="false">1097623290277-caqd9sm1jlq4me2i4f6phcjpnp81q8rr.apps.googleusercontent.com</string>
+    <string name="gcm_defaultSenderId" translatable="false">1097623290277</string>
+    <string name="google_api_key" translatable="false">AIzaSyDT-j-8_1yCVYPGrQ8UeQlj1uCEluIGNsE</string>
+    <string name="google_app_id" translatable="false">1:1097623290277:android:a15f553c48ffc133cee84c</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyDT-j-8_1yCVYPGrQ8UeQlj1uCEluIGNsE</string>
+    <string name="google_storage_bucket" translatable="false">nerfgun-394cc.appspot.com</string>
+    <string name="project_id" translatable="false">nerfgun-394cc</string>
+</resources>
