@@ -88,7 +88,28 @@ STEP files for the pan-tilt mechanism can be found [here](https://github.com/vin
 
 ## **Web Server and Website** - [rowBoat](https://www.github.com/rowboat)
 
-***Add your summary of work here and delete this comment.***
+The website consist:
+* The Login page - the first page that the user will see
+* The Home page - once the user has logged in this is the next page that they will be greeted by. this page will consist of the window to the view the live video feed from the turret and button the turret. 
+* The Device page - this page can be accessed by the corresponding link in the navigation bar at the top of the screen. This page is just for show but could be used to add more devices.
+* The Help page
+* A link to the github repository
+All pages besides the login page have a navigation bar to navigate to the other pages on the website, the sign out button, and the link to the github repository.
+
+Webserver
+OS: Ubuntu
+Wireless or wired: wireless
+Created to:
+* Store learning files for machine learning
+* Store login information
+* Store and Retrieve video feed and bullet count from the camera and jetson so it could be displayed on the website and app
+* Stores and sends button click to the jetson so when turret reacted to the corresponding button input.
+
+
+
+
+
+
 
 <br>
 
