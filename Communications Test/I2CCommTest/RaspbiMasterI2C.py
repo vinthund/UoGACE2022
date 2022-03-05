@@ -15,7 +15,7 @@
 (continuation) any communication error on I2C.
 *
 * Implementation of Heartbeat Signal: The i2cWrite function is now sending a value over I2C to the Arduino,
-(continuation) so as to act as a heartbeat signal. It is sending the value "100", which means "Status OK"
+(continuation) so as to act as a heartbeat signal. It is sending the value "100", which means "Status OK".
 *
 * Bug Fixes: The statusCodes function had 100 accidentally set as a string. The program never picked up on this and
 (continuation) would often ignore a "100" from the Arduino.
