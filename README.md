@@ -70,8 +70,25 @@ STEP files for the pan-tilt mechanism can be found [here](https://github.com/vin
 
 ## **Firing Mechanism Communications** - [JoelSmalls](https://www.github.com/JoelSmalls)
 
-***Add your summary of work here and delete this comment.***
+**Items that were used**
+* Raspberry Pi 3 Model B+
+* Arduino Nano 
+* Four Male to Female Jumper wires
+* Four Male to Male Jumper wires
+* Logic Level Shifter: Bi-Directional Module (Between 3V3 and 5V)
 
+In order to make the control of the Firing Mechanism possible through communication between the Jetson Nano and the Arduino (shown on above diagram), a communications protocol had to be utilised. Types of communications protocols, such as I2C(Inter-Integrated Circuit), USB(Universal Serial Bus) Serial and SPI(Serial Peripheral Interface) were each investigated to see which would work efficiently when communicating between a Jetson Nano and an Arduino. As a Jetson Nano was not in possession, a Raspberry Pi was instead used to just simulate how certain communications protocols would work with each other.
+
+The first iteration of a communications code between the Arduino and the Raspberry Pi was through USB Serial, in which a USB Cable was required to connect the Arduino straight to the Raspberry Pi. This was a simple type of communication which only required an Arduino USB Cable (dependent on board type) which could freely be moved around due to the length of the cable. However, we  had later anticipated that it would be necessary for a keyboard and mouse USB input to be left available on the Jetson Nano in case of errors. Thus, this idea was scrapped and was moved on to other types of communications protocols.
+
+Other protocols such as I2C and SPI were explored. According to research, when comparing between I2C and SPI, SPI was a faster option; this did not mean it could be instantly utilised though, as not enough examples of communication between an Arduino and a Jetson/Pi could be found online to make use of SPI. Furthermore, it required more wires to be connected to the Nano through a logic level shifter. Due to this, I2C was settled with. 
+
+**Setup**
+The Arduino's SDA (Serial Data) was connected to the High Voltage(HV) pin 1, SCL (Serial Clock) at HV2, Arduino 5V at the HV input pin and Arduino Ground to the shifter's Ground. These were connected to the High Voltage due to the Arduino operating at an output of 5V.
+
+The Raspberry Pi's SDA was connected on Low Voltage pin 1, opposite that of the Arduino's SDA connection; SCL was connected to LV2, 3V3 at LV input and Pi Ground to the shifter's ground. The Pi was connected to the Low Voltage side due to the Pi's output voltage being 3V3.
+
+To fully use I2C, the Arduino and the Raspberry Pi's Python 3's libraries were used, being ***wire*** and ***smbus2*** libraries respectively.
 <br>
 
 ## **Pan/Tilt Mechanism Communicatons** - [ht5640k](https://www.github.com/ht5640k)
