@@ -1,23 +1,31 @@
-/* I2C Communication Code 
- *  Tested between Arduino and its Master, (Currently Raspberry Pi). 
- *  Communication contents will consist of status codes to update the Raspberry Pi of its current status, and vice versa.
- *  SDA <--> SDA
- *  SCL <--> SCL
- *  GND <--> GND
- *  
- *  Version: 1.3.0
+/* I2C Communication Code
+    Tested between Arduino and its Master, (Currently Raspberry Pi).
+    Communication contents will consist of status codes to update the Raspberry Pi of its current status, and vice versa.
+    SDA <--> SDA
+    SCL <--> SCL
+    GND <--> GND
+
+    Version: 1.6.1
+
+    Changes made:
+    * RequestEvent function now able to send any kind of message to Pi with only a variable and without using requestEvent's parameters
+    * Implementation of a Heartbeat Signal
+    * Implementation of a "Connection Established" message when first starting program
+    * Status Codes addition
 */
 
 // Include the Wire library for I2C
 #include <Wire.h>
 
-// Definition of H Bridge, LED pins and integers
+// Definition of H Bridge, LED pins and integers, note that these are here for test purposes and may be controlled using I2C.
 #define ENA 2
 #define IN1 3
 #define IN2 4
 #define ledPin 13
 String received_str = "";
-int hhe = 50; // Although not seen on code, this was used as a test number to see if communication could be established between Raspberry Pi and Arduino
+bool flag = false;
+int toSend = 1;
+int toSendtest = 0;
 
 
 void setup() {
@@ -27,7 +35,7 @@ void setup() {
   // Call receiveEvent when data received and requestEvent when data is to be sent
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
-  
+
   //pinMode definitons for H bridge to be possibly used for later.
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
@@ -45,22 +53,40 @@ void receiveEvent(int howMany) {
 
 // Function that sends data to Master (Pi). Unlike receiveEvent, the Wire.available confirmation loop cannot be used as it stops data being sent.
 void requestEvent() {
-    int sensorValue = analogRead(A0); // Data from potentiometer to be sent to Pi as a Test
-    Wire.write(sensorValue);
+  Wire.write(toSend);
+}
+
+// Function that deals with status codes to control Arduino
+void statusCodes() {
+  String receivedMsg = received_str;
+  if (receivedMsg == "100") {
+    Serial.println("Status OK");
+  }
 }
 
 void loop() {
   delay(100);
-  int sensorValue = analogRead(A0);
-  Serial.println(sensorValue);
-  int n = received_str.toInt();
+  
+  if (flag == false) {
+    Serial.print(Wire.available());
+    delay(5000);
+    toSend=1;
+    flag = true;
+  }
+  toSend = 100;
+  statusCodes();
+  toSendtest++;
+  if (toSendtest >= 10) {
+    toSendtest = 0;
+  }
+  
 
+  int n = received_str.toInt();
   if (n > 0) { //Data Conversion utilised in a sense that when n is at 0, meaning that it is a character, does not get outputted, else print the number and reset.
-    Serial.print(received_str);
-    Serial.println();
+    Serial.println(received_str);
     received_str = "";
   } else {
     received_str = "";
   }
-  
+
 }
