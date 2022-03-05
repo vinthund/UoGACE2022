@@ -11,7 +11,7 @@
     * RequestEvent function now able to send any kind of message to Pi with only a variable and without using requestEvent's parameters
     * Implementation of a Heartbeat Signal
     * Implementation of a "Connection Established" message when first starting program
-    * Status Codes addition
+    * Status Codes addition.
 */
 
 // Include the Wire library for I2C
