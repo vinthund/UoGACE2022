@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1097623290277",
+    "project_id": "nerfgun-394cc",
+    "storage_bucket": "nerfgun-394cc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1097623290277:android:edffa2c57ab5004dcee84c",
+        "android_client_info": {
+          "package_name": "com.example.neftgun"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1097623290277-caqd9sm1jlq4me2i4f6phcjpnp81q8rr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT-j-8_1yCVYPGrQ8UeQlj1uCEluIGNsE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1097623290277-caqd9sm1jlq4me2i4f6phcjpnp81q8rr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1097623290277:android:a15f553c48ffc133cee84c",
+        "android_client_info": {
+          "package_name": "com.example.nerfgun"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1097623290277-caqd9sm1jlq4me2i4f6phcjpnp81q8rr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDT-j-8_1yCVYPGrQ8UeQlj1uCEluIGNsE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1097623290277-caqd9sm1jlq4me2i4f6phcjpnp81q8rr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
