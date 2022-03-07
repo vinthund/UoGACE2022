@@ -1,8 +1,5 @@
-# **Machine Vision Foam Dart Turret**
-
-### **UoG Advanced Computer Engineering Project 2021/22**
+![Title Image](https://github.com/vinthund/UoGACE2022/blob/ad4646d/Pan-TiltAssembly/Documentation/Assets/Title_Image.jpg?raw=true)
 <br>
-
 ## **About the Project**
 
 This project has been developed by the contributors below as a submission of coursework for the University of Greenwich Advanced Computer Engineering Module, academic year 2021/22.
@@ -139,7 +136,14 @@ Created to:
 
 ## **Project Management** - [Andrew Dean - ad4646d](https://www.github.com/ad4646d) & [Chris Halsall - ch6941r](https://www.github.com/ch6941r)
 
-***Add your summary of work here and delete this comment.***
+When the project was announced, we asked all team members to detail their prior skills and experience on a [shared word document](https://github.com/vinthund/UoGACE2022/blob/main/Project%20Management%20Documentation/ELEE1119%20Team%20List%20(AD%20created).docx).
+
+This initial skillset list was used to inform the project specification and division of tasks, which can be found in [this word document](https://github.com/vinthund/UoGACE2022/blob/main/Project%20Management%20Documentation/Project%20Specification%20and%20Division%20of%20Work%20(rev3).docx).
+
+After everyone had agreed to the contents of the specification and the division of work, a [Gantt chart was created in MS Project](https://github.com/vinthund/UoGACE2022/blob/main/Project%20Management%20Documentation/ELEE1119_Project_Plan_7th_Dec_2021.mpp) to give an overview of the project timeline and to clearly communicate deadlines.
+
+After the Gantt was shared with the team, a [KANBAN was maintained within GitHub](https://github.com/vinthund/UoGACE2022/projects/1). This KANBAN would get updated every Tuesday during the weekly standup meeting to establish what tasks people had in-progress and what tasks they had outstanding.
+
 
 <br>
 
