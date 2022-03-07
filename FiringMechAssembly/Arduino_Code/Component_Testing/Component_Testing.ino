@@ -9,8 +9,6 @@
 #define stepper_pos A5
 #define pan_dir 3
 #define pan_step 4
-#define tilt_dir A1
-#define tilt_step A0
 //#define button 13
 
 #define vmaxPWM 30
@@ -36,15 +34,15 @@ void setup() {
   servo.attach(servo_pin);
 
   //Stepper Pin Setup
-  pinMode(mag_step, OUTPUT);
+  pinMode(stepper, OUTPUT);
 
   //Pan Stepper Setup
   pinMode(pan_dir, OUTPUT);
   pinMode(pan_step, OUTPUT);
 
   //Tilt Stepper Setup
-  pinMode(tilt_dir, OUTPUT);
-  pinMode(tilt_step, OUTPUT);
+  //pinMode(tilt_dir, OUTPUT);
+  //pinMode(tilt_step, OUTPUT);
 
   //Stepper Position Setup
   pinMode(stepper_pos, INPUT);
@@ -75,11 +73,10 @@ void loop() {
     }
     Serial.println(dir);
   }
-  
-  digitalWrite(tilt_dir, dir);
-  digitalWrite(tilt_step, LOW);
+  digitalWrite(pan_dir, dir);
+  digitalWrite(pan_step, LOW);
   delayMicroseconds(1000);
-  digitalWrite(tilt_step,HIGH);
+  digitalWrite(pan_step,HIGH);
   delayMicroseconds(1000);
     
   //Stepper Motor Position Monitor
