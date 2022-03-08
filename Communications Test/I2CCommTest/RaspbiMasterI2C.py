@@ -8,10 +8,10 @@
 * Although the code could be utilised to send characters instead of numbers, it is overall better to use numbers so as to reduce bandwidth and keep
 * communication speed high.
 *
-*    Version 2.0.5
+*    Version 2.0.6
 * Changes made:
 * Increase Command Line clear range to 100
-* 
+* Removal of error 4 from status codes, leaving it as a seperate I/O error for the exception areas
 """
 
 import time
@@ -40,8 +40,6 @@ def statusCodes():
         print("Arduino: Connection Established") 
     elif n == 2:
         print("Arduino: Data Received!")
-    elif n == 4:
-        print("Error 4 - Arduino Disconnected")
     elif n == 21:
         print("Arduino: Out of Ammo!")
     elif n == 22:
