@@ -1,8 +1,5 @@
-# **Machine Vision Foam Dart Turret**
-
-### **UoG Advanced Computer Engineering Project 2021/22**
+![Title Image](https://github.com/vinthund/UoGACE2022/blob/ad4646d/Pan-TiltAssembly/Documentation/Assets/Title_Image.jpg?raw=true)
 <br>
-
 ## **About the Project**
 
 This project has been developed by the contributors below as a submission of coursework for the University of Greenwich Advanced Computer Engineering Module, academic year 2021/22.
@@ -47,17 +44,6 @@ A gearing ratio of 4:1 was chosen to increase the torque output of the NEMA17 st
 
 All bespoke 3D printed parts for the pan-tilt mechanism were printed in black PLA using an Anycubic i3 Mega.
 
-NEMA17 stepper motors were chosen as they provided adequate torque output to move both axes, they also feature a step angle of 1.8˚.
-* A [NEMA17x34](https://www.omc-stepperonline.com/nema-17-bipolar-1-8deg-26ncm-36-8oz-in-0-4a-12v-42x42x34mm-4-wires.html?search=17hs13) was chosen for the tilt axis
-* A [NEMA17x39](https://www.omc-stepperonline.com/nema-17-bipolar-45ncm-6374ozin-15a-42x42x39mm-4-wires-w--1m-pin-connector.html?search=17HS15-1504S-X1&description=true) was chosen for the pan axis
-
-[A4988 stepper drivers](https://www.amazon.co.uk/gp/product/B07MXXL2KW) were selected for a number of reasons:
-* They can drive bi-polar stepper motors up to 2A/phase
-* They only require two control pins from the microcontroller to control steps and direction
-* They are still readily available amidst the current global component shortage
-
-A combination of [small neodymium magnets](https://www.first4magnets.com/circular-disc-rod-c34/2mm-dia-x-2mm-thick-n42sh-neodymium-magnet-0-15kg-pull-p3327#ps_0_3379|ps_1_16690) and [hall effect sensors](https://www.amazon.co.uk/gp/product/B08QCRYXPK) are used to both 'home' each axis and to limit their movement, these were chosen over limit switches as they simplified mechanical assembly and design.
-
 An [off-the-shelf electronics enclosure](https://www.screwfix.com/p/schneider-electric-ip66-weatherproof-outdoor-enclosure-164-x-105-x-192mm/) was chosen to be the base of the system, this particular enclosure was chosen as it would provide adequate space to house all system components.
 
 A [lazy susan bearing](https://www.stilesandbates.co.uk/75mm-square-lazy-susan-bearing-1709.php) was chosen for the pan axis as it allowed for a convenient way to manage cables between the combined pan-tilt/firing mech and their control electronics in the enclosure below.
@@ -67,6 +53,26 @@ STEP files for the pan-tilt mechanism can be found [here](https://github.com/vin
 
 <br>
 
+
+## **Hardware for Pan/Tilt and Firing Mechanisms** - [Chris Halsall - ch6941r](https://www.github.com/ch6941r) & [Andrew Dean - ad4646d](https://www.github.com/ad4646d)
+**Pan/Tilt Mechanism Hardware - [Andrew Dean - ad4646d](https://www.github.com/ad4646d)**
+
+NEMA17 stepper motors were chosen for the Pan/Tilt axis as they provided adequate torque output to move both axes, they also feature a step angle of 1.8˚.
+* A [NEMA17x34](https://www.omc-stepperonline.com/nema-17-bipolar-1-8deg-26ncm-36-8oz-in-0-4a-12v-42x42x34mm-4-wires.html?search=17hs13) was chosen for the tilt axis
+* A [NEMA17x39](https://www.omc-stepperonline.com/nema-17-bipolar-45ncm-6374ozin-15a-42x42x39mm-4-wires-w--1m-pin-connector.html?search=17HS15-1504S-X1&description=true) was chosen for the pan axis
+
+[A4988 stepper drivers](https://www.amazon.co.uk/gp/product/B07MXXL2KW) were selected for a number of reasons:
+* They can drive bi-polar stepper motors up to 2A/phase
+* They only require two control pins from the microcontroller to control steps and direction
+* They are still readily available amidst the current global component shortage
+
+A combination of [small neodymium magnets](https://www.first4magnets.com/circular-disc-rod-c34/2mm-dia-x-2mm-thick-n42sh-neodymium-magnet-0-15kg-pull-p3327#ps_0_3379|ps_1_16690) and [hall effect sensors](https://www.amazon.co.uk/gp/product/B08QCRYXPK) are used to both 'home' each axis and to and to limit the movement on the tilt axis, these were chosen over limit switches as they simplified mechanical assembly and design.
+
+The hardware was connected up on a breadboard for testing ahead of the design of a veroboard prototype control board.
+
+**Firing Mechanism Hardware - [Chris Halsall - ch6941r](https://www.github.com/ch6941r)**
+
+**Veroboard Prototype PCB - [Chris Halsall - ch6941r](https://www.github.com/ch6941r)**
 
 ## **Firing Mechanism Communications** - [JoelSmalls](https://www.github.com/JoelSmalls)
 
@@ -139,7 +145,14 @@ Created to:
 
 ## **Project Management** - [Andrew Dean - ad4646d](https://www.github.com/ad4646d) & [Chris Halsall - ch6941r](https://www.github.com/ch6941r)
 
-***Add your summary of work here and delete this comment.***
+When the project was announced, we asked all team members to detail their prior skills and experience on a [shared word document](https://github.com/vinthund/UoGACE2022/blob/main/Project%20Management%20Documentation/ELEE1119%20Team%20List%20(AD%20created).docx).
+
+This initial skillset list was used to inform the project specification and division of tasks, which can be found in [this word document](https://github.com/vinthund/UoGACE2022/blob/main/Project%20Management%20Documentation/Project%20Specification%20and%20Division%20of%20Work%20(rev3).docx).
+
+After everyone had agreed to the contents of the specification and the division of work, a [Gantt chart was created in MS Project](https://github.com/vinthund/UoGACE2022/blob/main/Project%20Management%20Documentation/ELEE1119_Project_Plan_7th_Dec_2021.mpp) to give an overview of the project timeline and to clearly communicate deadlines.
+
+After the Gantt was shared with the team, a [KANBAN was maintained within GitHub](https://github.com/vinthund/UoGACE2022/projects/1). This KANBAN would get updated every Tuesday during the weekly standup meeting to establish what tasks people had in-progress and what tasks they had outstanding.
+
 
 <br>
 
