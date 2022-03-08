@@ -2,20 +2,20 @@
 #define motorInterfaceType 1
 
 //Stepper pins
-const int ci_panStepPin = 2;
-const int ci_panDirPin = 3;
+const int ci_panStepPin = 25;
+const int ci_panDirPin = 24;
 
-const int ci_tiltStepPin = 4;
-const int ci_tiltDirPin = 5;
+const int ci_tiltStepPin = 13;
+const int ci_tiltDirPin = 12;
 
 //Hall effect pins
-const int ci_panHomeHallPin = 6;
-const int ci_panLeftHallPin = 7;
-const int ci_panRghtHallPin = 8;
+const int ci_panHomeHallPin = 27;
+//const int ci_panLeftHallPin = 28; // Not used
+//const int ci_panRghtHallPin = 29; // Not used
 
-const int ci_tiltHomeHallPin = 9;
-const int ci_tiltDownHallPin = 10;
-const int ci_tiltUpHallPin = 11;
+const int ci_tiltHomeHallPin = 30;
+const int ci_tiltDownHallPin = 32;
+const int ci_tiltUpHallPin = 33;
 
 //Declare objects of AccelStepper to handle pan and tilt axes
 AccelStepper panStepper (motorInterfaceType, ci_panStepPin, ci_panDirPin);
@@ -44,8 +44,8 @@ void setup()
 
     //Input pins
     pinMode(ci_panHomeHallPin, INPUT);
-    pinMode(ci_panLeftHallPin, INPUT);
-    pinMode(ci_panRghtHallPin, INPUT);
+    //pinMode(ci_panLeftHallPin, INPUT); // Not used
+    //pinMode(ci_panRghtHallPin, INPUT); // Not used
     pinMode(ci_tiltHomeHallPin, INPUT);
     pinMode(ci_tiltDownHallPin, INPUT);
     pinMode(ci_tiltUpHallPin, INPUT);
