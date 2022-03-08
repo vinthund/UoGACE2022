@@ -5,8 +5,12 @@
 
 #define servo_pin 10
 #define motors_pin 5
-#define stepper 2
+#define mag_step 2
 #define stepper_pos A5
+#define pan_dir 3
+#define pan_step 4
+#define tilt_dir A1
+#define tilt_step A0
 //#define button 13
 
 #define vmaxPWM 30
@@ -17,6 +21,8 @@ AMS_5600 ams5600;
 
 byte out = 10;
 byte in = 130;
+
+bool dir = 1;
 
 int dart[12] = { 18 , 48, 78, 108, 138, 168, 198, 228, 258, 288, 318, 348 };
 
@@ -30,7 +36,15 @@ void setup() {
   servo.attach(servo_pin);
 
   //Stepper Pin Setup
-  pinMode(stepper, OUTPUT);
+  pinMode(mag_step, OUTPUT);
+
+  //Pan Stepper Setup
+  pinMode(pan_dir, OUTPUT);
+  pinMode(pan_step, OUTPUT);
+
+  //Tilt Stepper Setup
+  pinMode(tilt_dir, OUTPUT);
+  pinMode(tilt_step, OUTPUT);
 
   //Stepper Position Setup
   pinMode(stepper_pos, INPUT);
@@ -51,14 +65,26 @@ void loop() {
   //analogWrite(motors_pin, motorRamp.update());
 
   //Spinning Stepper Motor
-  //digitalWrite(stepper, LOW);
-  //delayMicroseconds(1000);
-  //digitalWrite(stepper,HIGH);
-  //delayMicroseconds(1000);
+  if(Serial.available()) {
+    if(Serial.read() == 'a') {
+      dir = 1;
+      Serial.read();
+    }
+    else {
+      dir = 0;
+    }
+    Serial.println(dir);
+  }
+  
+  digitalWrite(tilt_dir, dir);
+  digitalWrite(tilt_step, LOW);
+  delayMicroseconds(1000);
+  digitalWrite(tilt_step,HIGH);
+  delayMicroseconds(1000);
     
   //Stepper Motor Position Monitor
-  Serial.println(String(convertRawAngleToDegrees(ams5600.getRawAngle()),DEC));
-  delay(20);
+  //Serial.println(String(convertRawAngleToDegrees(ams5600.getRawAngle()),DEC));
+  //delay(20);
 
   //Servo Control
   //Serial.println(in);

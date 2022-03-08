@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="12e23759-1f4f-476a-b95d-03d8277d5865" name="Default Changelist" comment="" />
+    <list default="true" id="01450ca0-e05c-4c0b-8065-918e7dd7b729" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -29,16 +29,16 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Gun" type="f1a62948:ProjectNode" />
+                <item name="NerfGun" type="f1a62948:ProjectNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Gun" type="f1a62948:ProjectNode" />
+                <item name="NerfGun" type="f1a62948:ProjectNode" />
                 <item name="app" type="2d1252cf:ModuleNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="Gun" type="f1a62948:ProjectNode" />
+                <item name="NerfGun" type="f1a62948:ProjectNode" />
                 <item name="app" type="2d1252cf:ModuleNode" />
                 <item name="Dependencies" type="6de06a37:ExternalSystemViewDefaultContributor$MyDependenciesNode" />
               </path>
@@ -52,32 +52,24 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="valueResourceFile" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="GenerateSignedApkSettings">
-    <option name="KEY_STORE_PATH" value="$USER_HOME$/a" />
+    <option name="KEY_STORE_PATH" value="C:\games\kkk.jks" />
     <option name="KEY_ALIAS" value="key0" />
     <option name="REMEMBER_PASSWORDS" value="true" />
     <option name="BUILD_TARGET_KEY" value="apk" />
   </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
-  </component>
-  <component name="ProjectId" id="24t5CF6YKkLQSGvwcPd2rXdgx91" />
+  <component name="ProjectId" id="25pADPnEjI8mrG2pBypR1AaOmuk" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
-    <property name="ApkExportedModule" value="Gun.app" />
-    <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/app" />
+    <property name="ApkExportedModule" value="NerfGun.app" />
+    <property name="ExportApk.ApkPath" value="C:\Users\44746\Downloads\Telegram Desktop\NerfGun\NerfGun\app" />
     <property name="ExportApk.BuildVariants" value="debug" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -86,13 +78,13 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
   </component>
   <component name="RecentsManager">
-    <key name="android.template.1118758725">
-      <recent name="com.example.gun" />
+    <key name="android.template.1569728900">
+      <recent name="com.example.nerfgun" />
     </key>
   </component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
-      <module name="Gun.app" />
+      <module name="NerfGun.app" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
       <option name="DEPLOY_AS_INSTANT" value="false" />
@@ -154,11 +146,11 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="12e23759-1f4f-476a-b95d-03d8277d5865" name="Default Changelist" comment="" />
-      <created>1644436914606</created>
+      <changelist id="01450ca0-e05c-4c0b-8065-918e7dd7b729" name="Default Changelist" comment="" />
+      <created>1646213542840</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1644436914606</updated>
+      <updated>1646213542840</updated>
     </task>
     <servers />
   </component>
