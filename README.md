@@ -36,11 +36,35 @@ The [pan-tilt mechanism](https://github.com/vinthund/UoGACE2022/tree/main/Pan-Ti
 ***{insert up-to-date photo}***
 
 Herringbone gears were chosen for both pan and tilt axes for a number of reasons:
-* They feature minimal backlash compared to 3D printed spur gears
-* They are quieter in operation compared to 3D printed spur gears
-* More torque can be transmitted through them vs 3D printed spur gears\
+>* They feature minimal backlash compared to 3D printed spur gears
+>* They are quieter in operation compared to 3D printed spur gears
+>* More torque can be transmitted through them vs 3D printed spur gears 
 
-A gearing ratio of 4:1 was chosen to increase the torque output of the NEMA17 steppers and to give greater step-angle resolution... ***add further calculations for speed and torque output***.
+![Herringbone_Gears](https://raw.githubusercontent.com/vinthund/UoGACE2022/main/Pan-TiltAssembly/Documentation/Assets/Herringbone_Gears.jpg)
+
+A plug-in for Fusion 360 called [GF Gear Generator](https://apps.autodesk.com/FUSION/en/Detail/Index?id=1236778940008086660&appLang=en&os=Win64) was used to generate the herringbone gears. \
+![GF_Gear_Screenshot](https://raw.githubusercontent.com/vinthund/UoGACE2022/ad4646d/Pan-TiltAssembly/Documentation/Assets/GF_Gear_Generator_Screenshot_Example.png)
+This produces a finished gear as a body, which can then be adapted 
+
+The following parameters were found to produce gears with teeth that printed well and engaged with each other nicely.
+> * Module - 1mm
+> * Pressure angle - 14.5˚
+> * Helix angle - 40˚ 
+
+The number of teeth can be varied but the other parameters must remain the same for all meshing gears; the number of teeth and the module define the diameter of the gear:
+> Diameter of gear = module x number of teeth
+
+A gearing ratio of 4:1 was chosen to increase the torque output of the NEMA17 steppers and to give greater step-angle resolution.
+
+The centre distance between the pinion gear and the output gear is calculated as follows:
+> Centre distance = (Module*(No. teeth on pinion + No. teeth on output gear))/2
+
+[Flange bearings](https://www.amazon.co.uk/gp/product/B07SHSLTKD/ref=ppx_yo_dt_b_asin_title_o03_s00?ie=UTF8&psc=1) are used to attach the tilt axis to the assembly, highlighted in the cross-section below.
+![Flange_Bearings](https://raw.githubusercontent.com/vinthund/UoGACE2022/ad4646d/Pan-TiltAssembly/Documentation/Assets/Flange_Bearings.png) 
+These flange bearings interference fit into the firing mech support bracket (pink) and tilt axis gear (yellow), removing the need for glue and simplifying assembly.
+
+Locator pins have been designed into the bases of the two supporting supporting, these help to ensure that both supporting brackets are installed square to eachother, these are highlighted in the image below.
+![Locator_pins](https://raw.githubusercontent.com/vinthund/UoGACE2022/ad4646d/Pan-TiltAssembly/Documentation/Assets/Support_Bracket_Locator_Pins.png)
 
 All bespoke 3D printed parts for the pan-tilt mechanism were printed in black PLA using an Anycubic i3 Mega.
 
