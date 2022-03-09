@@ -5,26 +5,27 @@
     SCL <--> SCL
     GND <--> GND
 
-    Version: 1.6.1
+    Version: 1.6.4
 
     Changes made:
-    * RequestEvent function now able to send any kind of message to Pi with only a variable and without using requestEvent's parameters
-    * Implementation of a Heartbeat Signal
-    * Implementation of a "Connection Established" message when first starting program
+    * Addition of coordinate variables
+    * Removal of H Bridge outputs
+    * Addition made to statusCodes function such that it detects data sent from Pi and translates them accordingly.
+    * Addition of test code to receive coordinates
 */
 
 // Include the Wire library for I2C
 #include <Wire.h>
 
 // Definition of H Bridge, LED pins and integers, note that these are here for test purposes and may be controlled using I2C.
-#define ENA 2
-#define IN1 3
-#define IN2 4
 #define ledPin 13
 String received_str = "";
 bool flag = false;
 int toSend = 1;
 int toSendtest = 0;
+int x_coord = 0;
+int y_coord = 0;
+int z_coord = 0;
 
 
 void setup() {
@@ -36,9 +37,6 @@ void setup() {
   Wire.onRequest(requestEvent);
 
   //pinMode definitons for H bridge to be possibly used for later.
-  pinMode(IN1, OUTPUT);
-  pinMode(IN2, OUTPUT);
-  pinMode(ENA, OUTPUT);
   Serial.begin(9600);
 }
 
@@ -58,8 +56,16 @@ void requestEvent() {
 // Function that deals with status codes to control Arduino
 void statusCodes() {
   String receivedMsg = received_str;
-  if (receivedMsg == "100") {
-    Serial.println("Status OK");
+  if (receivedMsg == "1") {
+    Serial.println("Raspberry Pi - Connection Established");
+  } else if (receivedMsg == "2") {
+    Serial.println("Raspberry Pi - Data Received");
+  } else if (receivedMsg == "100") {
+    Serial.println("Raspberry Pi - Status OK");
+  } else if (receivedMsg.substring(0) == "(" ){
+   //do some code that splits the string intochunks of xyz with the comma acting as a delimiter
+  } else {
+    Serial.println("Raspberry Pi - Status Unknown");
   }
 }
 
@@ -67,16 +73,13 @@ void loop() {
   delay(100);
   
   if (flag == false) {
-    delay(5000);
+    delay(2500);
     toSend=1;
     flag = true;
   }
   toSend = 100;
   statusCodes();
-  toSendtest++;
-  if (toSendtest >= 10) {
-    toSendtest = 0;
-  }
+
   
 
   int n = received_str.toInt();
@@ -84,6 +87,7 @@ void loop() {
     Serial.println(received_str);
     received_str = "";
   } else {
+    Serial.println(received_str);
     received_str = "";
   }
 
