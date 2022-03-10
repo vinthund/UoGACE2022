@@ -1,4 +1,5 @@
 {
-    "port": "COM3",
-    "board": "arduino:avr:uno"
+    "port": "COM2",
+    "board": "arduino:avr:uno",
+    "sketch": "Communications Test\\I2CCommTest\\ArduinoSlaveI2C\\ArduinoSlaveI2C.ino"
 }
