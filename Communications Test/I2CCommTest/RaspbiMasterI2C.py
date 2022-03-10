@@ -8,16 +8,14 @@
 * Although the code could be utilised to send characters instead of numbers, it is overall better to use numbers so as to reduce bandwidth and keep
 * communication speed high.
 *
-*    Version 2.0.6
+*    Version 2.1.0
 * Changes made:
-* Increase Command Line clear range to 100
-* Removal of error 4 from status codes, leaving it as a seperate I/O error for the exception areas
+* Increase Command Line clear range to 200
+* Removed heartbeat
 """
-
 import time
 import os
 from smbus2 import SMBus
-count = 0
 
 
 clientAddr = 0x08
@@ -53,23 +51,16 @@ def statusCodes():
     else:
         print("Arduino Status Unknown")
 
-    
-
 def main():
     count = 0
     while True:
-        i2cWrite("100")
+        i2cWrite("(980,70)")
         count +=1
         if count == 100:
             os.system('clear')
             count = 0
-        #msg = input("Send message to Arduino \n" + "> ")
-        #print("...")
         statusCodes()
         print(i2cRead())
-        #i2cWrite(msg)
-
-    
 
 if __name__ == "__main__":
     try:
@@ -84,5 +75,3 @@ if __name__ == "__main__":
                 main()
             except:
                 pass
-        
- 
