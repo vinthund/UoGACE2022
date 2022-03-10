@@ -5,29 +5,36 @@
     SCL <--> SCL
     GND <--> GND
 
-    Version: 1.6.1
-
-    Changes made:
-    * RequestEvent function now able to send any kind of message to Pi with only a variable and without using requestEvent's parameters
-    * Implementation of a Heartbeat Signal
-    * Implementation of a "Connection Established" message when first starting program
+    Version 2.1.7
+   Changes made:
+        Addition of coordinate variables - MM
+        Removal of H Bridge outputs - MM
+        Addition made to statusCodes function such that it detects data sent from Pi and translates them accordingly. - M
+        Addition of new line which handles receiving and storing coordinates, this is done through "sscanf" which assigns the numbers within the coordinates to variable x and y - M
+        Addition of new start up function. - MM
+        Addition of conversion function which only prints numbers and coordinates barring texts. - MM
+        Removed problematic else statement from statusCodes function which would flood serial monitor with "unknown" - MM
+        Removed led pin13 due to being unused - MM
+        Addition of new boolean variables "trigger" and "movement", both responsible for activating when the process of shooting and movement happens respectively. - M
+        (continuation) each is to be used as a switch so that they do not shoot and move at the same time.
+        Addition of new variable "ammo" to represent amount of ammo left. - M
+        Addition of Servo library and code - M
 */
 
 // Include the Wire library for I2C
 #include <Wire.h>
+#include <Servo.h>
 
+Servo myservo;
 // Definition of H Bridge, LED pins and integers, note that these are here for test purposes and may be controlled using I2C.
-#define ENA 2
-#define IN1 3
-#define IN2 4
-#define ledPin 13
 String received_str = "";
-bool flag = false;
 int toSend = 1;
-int toSendtest = 0;
-
+int x, y, ammo, mapper, x_old, y_old;
+int pos, ypos = 0;
+bool flag, constant, trigger, movement = false;
 
 void setup() {
+  myservo.attach(2);
   // Join I2C bus as slave with address 8
   Wire.begin(0x8);
 
@@ -35,10 +42,6 @@ void setup() {
   Wire.onReceive(receiveEvent);
   Wire.onRequest(requestEvent);
 
-  //pinMode definitons for H bridge to be possibly used for later.
-  pinMode(IN1, OUTPUT);
-  pinMode(IN2, OUTPUT);
-  pinMode(ENA, OUTPUT);
   Serial.begin(9600);
 }
 
@@ -57,34 +60,76 @@ void requestEvent() {
 
 // Function that deals with status codes to control Arduino
 void statusCodes() {
-  String receivedMsg = received_str;
-  if (receivedMsg == "100") {
-    Serial.println("Status OK");
+  if (received_str == "1") {
+    Serial.println("Raspberry Pi - Connection Established");
+  } else if (received_str == "2") {
+    Serial.println("Raspberry Pi - Data Received");
+  } else if (received_str == "100") {
+    Serial.println("Raspberry Pi - Status OK");
+  } else if (received_str[0] == '(' ) {
+    Serial.println("Coordinates Received, Ready to Delete Target!");
+    if (constant == true) {
+      movement = false;
+    } else {
+      movement == true;
+    }
+    int r = sscanf(received_str.c_str(), "(%d, %d)", &x, &y);
+    Serial.print("X: ");
+    Serial.println(x);
+    Serial.print("Y: ");
+    Serial.println(y);
+  }
+}
+// Function that deals with startUp, establishing connection between the Pi and the Arduino.
+void startUp() {
+  if (flag == false) {
+    toSend = 1;
+    delay(3000); // delay of 3 seconds before setting flag to true
+    flag = true;
+  }
+}
+
+void convertToInt() {
+  int n = received_str.toInt();
+  if (n > 0 || received_str[0] == '(') {
+    //Serial.println(received_str);
+    received_str = "";
+  } else {
+    received_str = "";
+  }
+}
+
+void onDetectTarget() {
+  x = map(x, 0, 1023, 0, 180);
+  y = map(y, 0, 1023, 0, 180);
+  if (movement == true) {
+    for (pos = 0; pos <= x; pos += 1) {
+      myservo.write(pos);
+      delay(15);
+    }
+    movement = false;
+    //pos = 0;
+    //Code to first map the values of xyz into limit of 255, then have the turret move to target and shoot
+  }
+}
+
+void compareOldNew() {
+  x_old = x;
+  y_old = y;
+  delay(900);
+  if (x == x_old && y == y_old) {
+    constant = true;
+  } else {
+    constant = false;
   }
 }
 
 void loop() {
   delay(100);
-  
-  if (flag == false) {
-    delay(5000);
-    toSend=1;
-    flag = true;
-  }
+  startUp();
   toSend = 100;
   statusCodes();
-  toSendtest++;
-  if (toSendtest >= 10) {
-    toSendtest = 0;
-  }
-  
-
-  int n = received_str.toInt();
-  if (n > 0) { //Data Conversion utilised in a sense that when n is at 0, meaning that it is a character, does not get outputted, else print the number and reset.
-    Serial.println(received_str);
-    received_str = "";
-  } else {
-    received_str = "";
-  }
-
+  convertToInt();
+  onDetectTarget();
+  compareOldNew();
 }

@@ -51,6 +51,12 @@ def statusCodes():
     else:
         print("Arduino Status Unknown")
 
+<<<<<<< HEAD
+=======
+
+    
+
+>>>>>>> b08525de57479af2668a2ea9755a07eb2752ea66
 def main():
     count = 0
     while True:
@@ -61,6 +67,11 @@ def main():
             count = 0
         statusCodes()
         print(i2cRead())
+<<<<<<< HEAD
+=======
+
+    
+>>>>>>> b08525de57479af2668a2ea9755a07eb2752ea66
 
 if __name__ == "__main__":
     try:
@@ -74,4 +85,11 @@ if __name__ == "__main__":
                 print("Error 4 - Arduino Disconnected")
                 main()
             except:
+<<<<<<< HEAD
                 pass
+=======
+                pass
+        
+ 
+
+>>>>>>> b08525de57479af2668a2ea9755a07eb2752ea66
