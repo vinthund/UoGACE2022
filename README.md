@@ -33,12 +33,10 @@ The firing mechanism contains a few pre-made parts including a small stepper mot
 
 The [pan-tilt mechanism](https://github.com/vinthund/UoGACE2022/tree/main/Pan-TiltAssembly) is a bespoke 3D printed mechanism that was designed in tandem with bespoke the [firing mechanism](https://github.com/vinthund/UoGACE2022/tree/ad4646d/3D%20Designs/Firing%20Mech) using AutoDesk Fusion 360.
 
-***{insert up-to-date photo}***
-
 Herringbone gears were chosen for both pan and tilt axes for a number of reasons:
->* They feature minimal backlash compared to 3D printed spur gears
->* They are quieter in operation compared to 3D printed spur gears
->* More torque can be transmitted through them vs 3D printed spur gears 
+* They feature minimal backlash compared to 3D printed spur gears
+* They are quieter in operation compared to 3D printed spur gears
+* More torque can be transmitted through them vs 3D printed spur gears 
 
 ![Herringbone_Gears](https://raw.githubusercontent.com/vinthund/UoGACE2022/main/Pan-TiltAssembly/Documentation/Assets/Herringbone_Gears.jpg)
 
@@ -70,7 +68,9 @@ All bespoke 3D printed parts for the pan-tilt mechanism were printed in black PL
 
 An [off-the-shelf electronics enclosure](https://www.screwfix.com/p/schneider-electric-ip66-weatherproof-outdoor-enclosure-164-x-105-x-192mm/) was chosen to be the base of the system, this particular enclosure was chosen as it would provide adequate space to house all system components.
 
-A [lazy susan bearing](https://www.stilesandbates.co.uk/75mm-square-lazy-susan-bearing-1709.php) was chosen for the pan axis as it allowed for a convenient way to manage cables between the combined pan-tilt/firing mech and their control electronics in the enclosure below.
+A [lazy susan bearing](https://www.stilesandbates.co.uk/75mm-square-lazy-susan-bearing-1709.php) was chosen for the pan axis as it allowed for a convenient way to manage cables between the combined pan-tilt/firing mech and their control electronics in the enclosure below. \
+The lazy susan did introduce a lot of audible noise to the system, this is due to a combination of the fact it is an unlubricated bearing and that the enclosure it is attached to was acting like a voice box, amplifying its vibrations. 
+A foam pad was added between the bearing and the enclosure and the bearing lubricated with silicone grease, this helped somewhat with the audible noise. Half-step microstepping was also used to reduce the audible noise.
 
 The full parts list for the pan-tilt mechanism can be found [here](https://github.com/vinthund/UoGACE2022/blob/ad4646d/Pan-TiltAssembly/Documentation/Pan-Tilt%20Head%20Parts%20List.pdf).\
 STEP files for the pan-tilt mechanism can be found [here](https://github.com/vinthund/UoGACE2022/tree/main/Pan-TiltAssembly/CAD_Files).
@@ -88,6 +88,7 @@ NEMA17 stepper motors were chosen for the Pan/Tilt axis as they provided adequat
 [A4988 stepper drivers](https://www.amazon.co.uk/gp/product/B07MXXL2KW) were selected for a number of reasons:
 * They can drive bi-polar stepper motors up to 2A/phase
 * They only require two control pins from the microcontroller to control steps and direction
+* They can support microstepping
 * They are still readily available amidst the current global component shortage
 
 A combination of [small neodymium magnets](https://www.first4magnets.com/circular-disc-rod-c34/2mm-dia-x-2mm-thick-n42sh-neodymium-magnet-0-15kg-pull-p3327#ps_0_3379|ps_1_16690) and [hall effect sensors](https://www.amazon.co.uk/gp/product/B08QCRYXPK) are used to both 'home' each axis and to and to limit the movement on the tilt axis, these were chosen over limit switches as they simplified mechanical assembly and design.
