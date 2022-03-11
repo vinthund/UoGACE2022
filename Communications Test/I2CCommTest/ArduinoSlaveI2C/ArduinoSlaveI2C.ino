@@ -5,17 +5,17 @@
     SCL <--> SCL
     GND <--> GND
 
-    Version 2.3.1
+    Version 2.3.2
    Changes made:
      * Addition of ammo checking condition that checks if ammo is within container. If there is, it triggers the shoot flag, thereby shooting the target with foam.
+     * Changes made to servo definitions to make them on the same line, making code look cleaner.
 */
 
 // Include the Wire library for I2C
 #include <Wire.h>
 #include <Servo.h>
 
-Servo myservo;
-Servo myservo2;
+Servo myservo, myservo2;
 String received_str = "";
 int toSend;
 int x, y, ammo;
