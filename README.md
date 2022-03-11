@@ -114,6 +114,7 @@ The Arduino's SDA (Serial Data) was connected to the High Voltage(HV) pin 1, SCL
 The Raspberry Pi's SDA was connected on Low Voltage pin 1, opposite that of the Arduino's SDA connection; SCL was connected to LV2, 3V3 at LV input and Pi Ground to the shifter's ground. The Pi was connected to the Low Voltage side due to the Pi's output voltage being 3V3.
 
 To fully use I2C, the Arduino and the Raspberry Pi's Python 3's libraries were used, being ***wire*** and ***smbus2*** libraries respectively.
+![I22ImagePiArduino](https://user-images.githubusercontent.com/48869133/157861137-2b457d97-22b6-4f79-860c-77544ec5475e.jpg)
 <br>
 
 ## **Pan/Tilt Mechanism Communicatons** - [ht5640k](https://www.github.com/ht5640k)
