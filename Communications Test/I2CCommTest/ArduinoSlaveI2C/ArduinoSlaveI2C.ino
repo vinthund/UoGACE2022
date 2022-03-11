@@ -5,12 +5,9 @@
     SCL <--> SCL
     GND <--> GND
 
-    Version 2.3.0
+    Version 2.3.1
    Changes made:
-     * Removal of startup function, simplifying it into just "toSend=1" on "void setup()"
-     * Addition of static int to store old values of positions received. This is so that the servo's position does not reset every time it receives coordinates.
-     * Fixed Bug of Servo not moving. Main cause of issue was due to having another "=" on variable assignment. :/
-     * Removal of redundant variables.
+     * Addition of ammo checking condition that checks if ammo is within container. If there is, it triggers the shoot flag, thereby shooting the target with foam.
 */
 
 // Include the Wire library for I2C
@@ -116,7 +113,14 @@ void onDetectTarget() {
   if (movement == true) {
     myservo.write(x);
     myservo2.write(y);
-    
+    /* Responsible for handling shooting
+    if (ammo > 3) {
+      trigger = true;
+      //start shooting
+    } else {
+      trigger = false;
+    }
+    */
     delay(15);
     movement = false;
   }
