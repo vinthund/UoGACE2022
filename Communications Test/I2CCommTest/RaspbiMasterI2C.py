@@ -8,14 +8,15 @@
 * Although the code could be utilised to send characters instead of numbers, it is overall better to use numbers so as to reduce bandwidth and keep
 * communication speed high.
 *
-*    Version 2.1.0
+*    Version 2.2.0
 * Changes made:
-* Increase Command Line clear range to 200
-* Removed heartbeat
+* New function named "setCoordinate" created which handles receiving coordinates and sending them over I2C.
 """
 import time
 import os
 from smbus2 import SMBus
+x = 0
+y = 0
 
 
 clientAddr = 0x08
@@ -50,11 +51,15 @@ def statusCodes():
         print("Arduino: Mechanical Error!")
     else:
         print("Arduino Status Unknown")
+        
+def setCoordinate(x_coord, y_coord):
+    coord = ("("+ str(x_coord) + "," + str(y_coord) + ")")
+    i2cWrite(coord)
 
 def main():
-    count = 0
+    count = 0 
     while True:
-        i2cWrite("(980,70)")
+        setCoordinate(450, 0)
         count +=1
         if count == 100:
             os.system('clear')
