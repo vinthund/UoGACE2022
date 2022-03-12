@@ -8,9 +8,16 @@
 * Although the code could be utilised to send characters instead of numbers, it is overall better to use numbers so as to reduce bandwidth and keep
 * communication speed high.
 *
+<<<<<<< HEAD
+*     Version 2.2.2
+*     Changes made:
+* Implementation of f strings.
+* Bug Fixes made to logging code which for some reason did not want to register other types of logging levels such as DEBUG or WARNING.
+=======
 *     Version 2.2.3
 *     Changes made:
 * Increased count range to 250, so that it clear after 250 line have been made in terminal.
+>>>>>>> main
 """
 import time
 import logging
@@ -73,7 +80,11 @@ def main():
     while True:
         setCoordinate(450, 0)
         count +=1
+<<<<<<< HEAD
+        if count == 100:
+=======
         if count == 250:
+>>>>>>> main
             os.system('clear')
             count = 0
         statusCodes()

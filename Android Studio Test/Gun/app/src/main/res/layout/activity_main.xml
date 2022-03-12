@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.MainActivity">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        tools:context=".Activity.MainActivity">
+
+        <Button
+            android:id="@+id/liveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:onClick="liveClick"
+            android:text="Live" />
+
+        <Button
+            android:id="@+id/signoutBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:onClick="signoutClick"
+            android:text="Back" />
+
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/signoutBtn"
+            android:layout_marginTop="20dp"
+            android:background="#DDDDDD"
+            tools:context="com.example.akshay.studytonightandroid.MainActivity">
+
+
+            <LinearLayout
+                android:id="@+id/bulletsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- place two button's inside layout using weight property -->
+
+                <TextView
+                    android:id="@+id/bulletsKeyTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:text="Bullets count"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/bulletsValueTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="10"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/todayShootsLayout"
+                android:layout_below="@+id/bulletsLayout"
+                android:layout_alignEnd="@+id/bulletsLayout"
+                android:layout_alignRight="@+id/bulletsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- place two button's inside layout using weight property -->
+
+                <TextView
+                    android:id="@+id/todayShootsKeyTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:text="Today shoots count"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/todayShootsValueTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="3"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/successShootsLayout"
+                android:layout_below="@+id/todayShootsLayout"
+                android:layout_alignEnd="@+id/todayShootsLayout"
+                android:layout_alignRight="@+id/todayShootsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+                <!-- place two button's inside layout using weight property -->
+
+                <TextView
+                    android:id="@+id/successShootsKeyTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:text="Success shoots count"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/successShootsValueTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="1"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/failedLayout"
+                android:layout_below="@+id/successShootsLayout"
+                android:layout_alignEnd="@+id/successShootsLayout"
+                android:layout_alignRight="@+id/successShootsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <!-- place two button's inside layout using weight property -->
+
+                <TextView
+                    android:id="@+id/failedKeyTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="1"
+                    android:text="Failed shoots count"
+                    android:paddingLeft="20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/failedValueTextView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="1"
+                    android:text="2"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/registerBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:text="Change setting" />
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
