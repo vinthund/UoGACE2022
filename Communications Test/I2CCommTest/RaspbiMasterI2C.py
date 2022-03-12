@@ -44,6 +44,7 @@ def statusCodes():
         logging.info("Arduino: Connection Established. Device Healthy")
     elif n == 2:
         print("Arduino: Data Received!")
+        logging.info("Arduino: Connection Established. Device Healthy")
     elif n == 21:
         print("Arduino: Out of Ammo!")
         logging.warning("Arduino: Out of Ammo!")
