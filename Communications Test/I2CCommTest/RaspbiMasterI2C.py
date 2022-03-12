@@ -8,16 +8,17 @@
 * Although the code could be utilised to send characters instead of numbers, it is overall better to use numbers so as to reduce bandwidth and keep
 * communication speed high.
 *
-*    Version 2.0.5
-* Changes made:
-* Addition through implementation of a new exception, which deals with catching a disconnection between the Arduino and the Raspberry Pi and
-(continuation) printing "Error 4"
+*     Version 2.2.3
+*     Changes made:
+* Increased count range to 250, so that it clear after 250 line have been made in terminal.
 """
-
 import time
+import logging
 import os
 from smbus2 import SMBus
-count = 0
+logging.basicConfig(filename='I2CHealth.log', level=logging.DEBUG, format='%(asctime)s:%(levelname)s:%(message)s')
+x = 0
+y = 0
 
 
 clientAddr = 0x08
@@ -27,65 +28,72 @@ def i2cRead():
     for i in str(bus.read_byte(clientAddr)):
         data = bus.read_byte(clientAddr)
         time.sleep(0.905)
+    logging.info("Message Read from Arduino")
     return int(data)
 
 def i2cWrite(msg):
     for c in msg:
         bus.write_byte(clientAddr, ord(c))
+    logging.info("Message Written to Arduino")
     return -1
         
 def statusCodes():
     n = i2cRead()
     if n == 1:
-        print("Arduino: Connection Established") 
+        print("Arduino: Connection Established")
+        logging.info("Arduino: Connection Established. Device Healthy")
     elif n == 2:
         print("Arduino: Data Received!")
-    elif n == 4:
-        print("Error 4 - Arduino Disconnected")
+        logging.info("Arduino: Connection Established. Device Healthy")
     elif n == 21:
         print("Arduino: Out of Ammo!")
+        logging.warning("Arduino: Out of Ammo!")
     elif n == 22:
         print("Shooting Error! Fix Immediately!")
+        logging.warning("Arduino: Shooting Error!")
     elif n == 100:
         print("Arduino: Currently Alive!")
+        logging.info("Arduino: Device Healthy")
     elif n == 110:
         print("Arduino: Program Error!")
+        logging.warning("Arduino: Program Error")
     elif n == 115:
         print("Arduino: Mechanical Error!")
+        logging.warning("Arduino: Mechanical Error")
     else:
         print("Arduino Status Unknown")
-
-    
+        logging.info("Arduino Device Status Unknown.")
+        
+def setCoordinate(x_coord, y_coord):
+    coord = (f'({x_coord},{y_coord})')
+    i2cWrite(coord)
+    logging.info(f'Coordinate: {coord}')
 
 def main():
-    count = 0
+    count = 0 
     while True:
-        i2cWrite("100")
+        setCoordinate(450, 0)
         count +=1
-        if count == 10:
+        if count == 250:
             os.system('clear')
-            i2cWrite("5")
             count = 0
-        #msg = input("Send message to Arduino \n" + "> ")
-        #print("...")
         statusCodes()
         print(i2cRead())
-        #i2cWrite(msg)
 
-    
+
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
         print("Program Terminated Manually")
+        logging.info("Program Terminated Manually")
     except IOError:
         while True:
             time.sleep(0.5)
             try:
                 print("Error 4 - Arduino Disconnected")
+                logging.warning("Arduino Device Disconnected.")
                 main()
             except:
                 pass
-        
- 
