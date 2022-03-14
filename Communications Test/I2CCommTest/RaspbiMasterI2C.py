@@ -8,17 +8,10 @@
 * Although the code could be utilised to send characters instead of numbers, it is overall better to use numbers so as to reduce bandwidth and keep
 * communication speed high.
 *
-*    Version 2.0.4
+*    Version 2.0.5
 * Changes made:
-* Error Code adjustment; implementation of Error 4: The reason this came to be was due to 4 always being printed to the
-(continuation) terminal whenever there was some sort of communication error. Adding this is good as it will point out
-(continuation) any communication error on I2C.
-*
-* Implementation of Heartbeat Signal: The i2cWrite function is now sending a value over I2C to the Arduino,
-(continuation) so as to act as a heartbeat signal. It is sending the value "100", which means "Status OK".
-*
-* Bug Fixes: The statusCodes function had 100 accidentally set as a string. The program never picked up on this and
-(continuation) would often ignore a "100" from the Arduino.
+* Addition through implementation of a new exception, which deals with catching a disconnection between the Arduino and the Raspberry Pi and
+(continuation) printing "Error 4"
 """
 
 import time
@@ -48,7 +41,7 @@ def statusCodes():
     elif n == 2:
         print("Arduino: Data Received!")
     elif n == 4:
-        print("Bi-Directional Communication Error")
+        print("Error 4 - Arduino Disconnected")
     elif n == 21:
         print("Arduino: Out of Ammo!")
     elif n == 22:
@@ -86,4 +79,13 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         print("Program Terminated Manually")
+    except IOError:
+        while True:
+            time.sleep(0.5)
+            try:
+                print("Error 4 - Arduino Disconnected")
+                main()
+            except:
+                pass
+        
  
