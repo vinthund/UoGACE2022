@@ -163,8 +163,11 @@ This app has few pages which are:
 ![image](https://user-images.githubusercontent.com/91549986/158219660-c7ccc79a-a6d6-48ee-ba87-26c2d850fbc7.png)
 
 *Register page
+
 *Main page
+
 *Live page
+
 Firebase has been used as a database for the login and register page to save all users' information and account date of the last login and created the account.
 ![image](https://user-images.githubusercontent.com/91549986/158220525-f49d3015-efca-4c4c-9624-0ee2122067cf.png)
 
