@@ -160,9 +160,10 @@ Created to:
 
 This app has few pages which are:
 
-*Login page
+* Login page
 
-*Register page
+* Register page
+* 
 ![image](https://user-images.githubusercontent.com/91549986/158219660-c7ccc79a-a6d6-48ee-ba87-26c2d850fbc7.png)
 
 *Main page
@@ -173,6 +174,7 @@ Firebase has been used as a database for the login and register page to save all
 ![image](https://user-images.githubusercontent.com/91549986/158220525-f49d3015-efca-4c4c-9624-0ee2122067cf.png)
 
 The main page was supposed to count the bullets, but due to circumstances, it hasn't been completed.
+
 The live page was supposed to show the live stream from the camera, but for now it shows the which is typically used as a test to check if the live stream is working.
 
 <br>
