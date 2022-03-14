@@ -159,10 +159,11 @@ Created to:
 ## **Machine Vision Foam Dart Turret App** - [Kamyar Homampour-kamyar123](https://www.github.com/kamyar123)
 
 This app has few pages which are:
+
 *Login page
-![image](https://user-images.githubusercontent.com/91549986/158219660-c7ccc79a-a6d6-48ee-ba87-26c2d850fbc7.png)
 
 *Register page
+![image](https://user-images.githubusercontent.com/91549986/158219660-c7ccc79a-a6d6-48ee-ba87-26c2d850fbc7.png)
 
 *Main page
 
