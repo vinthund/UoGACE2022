@@ -175,7 +175,7 @@ Firebase has been used as a database for the login and register page to save all
 
 The main page was supposed to count the bullets, but due to circumstances, it hasn't been completed.
 
-The live page was supposed to show the live stream from the jetson nano camera, but now it shows the test stream for rtsp link to test that if the live stream is actually working.
+The live page was supposed to show the live stream from the jetson nano camera, but now it shows the test stream for rtsp link to test  if the live stream is actually working.
 (https://www.wowza.com/developer/rtsp-stream-test)
 
 <br>
