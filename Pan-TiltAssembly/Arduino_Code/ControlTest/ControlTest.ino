@@ -63,13 +63,13 @@ void loop()
 {
     switch(i_stateMachine)
     {
-        case(0):
+        case 0:
             homing_func();
             break;
-        case(1):
+        case 1:
             scanning_func();
             break;
-        case(2):
+        case 2:
             tracking_func();
             break;
         default:
@@ -79,7 +79,7 @@ void loop()
 
 void homing_func() //Contains the function for homing the pan/tilt head
 {
-    if(b_tiltAxisHomed = false) // This section will home the tilt axis, it will run first.
+    if(b_tiltAxisHomed == false) // This section will home the tilt axis, it will run first.
     {
         tiltStepper.setSpeed(100);
         tiltStepper.setAcceleration(50);
@@ -173,9 +173,9 @@ void homing_func() //Contains the function for homing the pan/tilt head
                 Serial.println("Pan axis homed!")
             }
             b_panAxisHomed = true;
+            i_stateMachine = 2; // Enter 'tracking_func' state
         }
     }
-
 }// end of homing_func
 
 void scanning_func() //Contains the function for 'scanning' for potential tartets
@@ -185,5 +185,16 @@ void scanning_func() //Contains the function for 'scanning' for potential tartet
 
 void tracking_func() //Contains the function for 'tracking' a target once it has been identified
 {
-
-}
+    if(Serial.available() > 0)
+    {
+        /* 
+            Add code here that accepts users coordinates
+            Checks to see if inputted coordinates are within bounds of acceptable movement
+            And drives mechanism to user specified coordinates
+        */
+       if(i_tiltTargetCoord > -133 || i_tiltTargetCoord > 133)
+       {
+           Serial.println("Please enter a value between -133 (Look up) and 133 (Look down).");
+       }
+    }
+} //End of tracking_func
