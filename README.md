@@ -17,7 +17,7 @@ Mechanical parts of this project are mostly custom using standard industry parts
 - [Chris Halsall - ch6941r -](https://www.github.com/ch6941r)  [AfterEarthLtd](https://www.github.com/AfterEarthLTD)
 - [vinthund](https://www.github.com/vinthund)
 - [ht5640k](https://www.github.com/ht5640k)
-- [JoelSmalls](https://www.github.com/JoelSmalls)
+- [JoelSmalls - Joel A. Okanta](https://www.github.com/JoelSmalls)
 - [kamyar123](https://www.github.com/kamyar123)
 - [rowBoat](https://www.github.com/rowboat)
 <br>
@@ -117,7 +117,7 @@ Some additional capacitors and a diode help to reduce input shock current (and t
 
 <br>
 
-## **Firing Mechanism Communications** - [JoelSmalls](https://www.github.com/JoelSmalls)
+## **Firing Mechanism Communications** - [JoelSmalls - Joel A. Okanta](https://www.github.com/JoelSmalls)
 
 **Items that were used**
 * Raspberry Pi 3 Model B+
