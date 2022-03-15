@@ -116,7 +116,7 @@ The Raspberry Pi's SDA was connected on Low Voltage pin 1, opposite that of the 
 To fully use I2C, the Arduino and the Raspberry Pi's Python 3's libraries were used, being ***wire*** and ***smbus2*** libraries respectively.
 <br>
 
-## **Pan/Tilt Mechanism Communicatons** - [ht5640k](https://www.github.com/ht5640k)
+## **Pan/Tilt Mechanism Communicatons** - [ht5640k- Harshitha Thimmegowda](https://www.github.com/ht5640k)
 
 ***Add your summary of work here and delete this comment.***
 
