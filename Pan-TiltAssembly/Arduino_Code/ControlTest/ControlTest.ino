@@ -85,10 +85,12 @@ void homing_func() //Contains the function for homing the pan/tilt head
         tiltStepper.setAcceleration(50);
         if(i_tiltUpHallDetect == 0)
         {
-            i_tiltHomingDirection = 0;
-            i_tiltTargetCoord = 133; // If a tilt up/down hall effect is detected, axis is 30˚ from home
-                                     // Tilt stepper  = 1.8˚/step, 4:1 gearing ratio + half stepping = 133 steps to get back home
-            tiltStepper.moveTo(i_tiltTargetCoord); // Drive CW back to approx tilt home hall effect
+            i_tiltHomingDirection = 1;
+            i_tiltTargetCoord = 133; /* If a tilt up/down hall effect is detected, axis is 30˚ from home
+                                        Tilt stepper  = 1.8˚/step, 4:1 gearing ratio + half stepping = 133 steps to get back home */
+            tiltStepper.stop(); //Stops the mech in the 
+            tiltStepper.move(i_tiltTargetCoord); /* Drive CW back to approx tilt home hall effect,
+                                                    The 'move' class variable will move the mech relative to the current position. */
             tiltStepper.run();
             if(b_serialDebugPrint = true)
             {
@@ -98,9 +100,10 @@ void homing_func() //Contains the function for homing the pan/tilt head
 
         if(i_tiltDownHallDetect == 0)
         {
-            i_tiltHomingDirection = 1;
-            i_tiltTargetCoord = 133; 
-            tiltStepper.moveTo(-i_tiltTargetCoord); // Drive CCW back to approx tilt home hall effect
+            i_tiltHomingDirection = 2;
+            i_tiltTargetCoord = 133;
+            tiltStepper.stop(); 
+            tiltStepper.move(-i_tiltTargetCoord); // Drive CCW back to approx tilt home hall effect
             tiltStepper.run();
             if(b_serialDebugPrint = true)
             {
@@ -113,7 +116,19 @@ void homing_func() //Contains the function for homing the pan/tilt head
             if(i_tiltHomingDirection == 0)
             {
                 i_tiltTargetCoord = 1;
-                tiltStepper.moveTo(i_tiltTargetCoord);
+                tiltStepper.move(i_tiltTargetCoord);
+                i_tiltTargetCoord++;
+                tiltStepper.run();
+                if(b_serialDebugPrint == true)
+                {
+                    Serial.println("Tilt axis not at a limiting hall effect sensor, homing slowly...")
+                }
+            }
+            
+            if(i_tiltHomingDirection == 1)
+            {
+                i_tiltTargetCoord = 1;
+                tiltStepper.move(i_tiltTargetCoord);
                 i_tiltTargetCoord++;
                 tiltStepper.run();
                 if(b_serialDebugPrint == true)
@@ -122,10 +137,10 @@ void homing_func() //Contains the function for homing the pan/tilt head
                 }
             }
             
-            if(i_tiltHomingDirection == 1)
+            if(i_tiltHomingDirection == 2)
             {
                 i_tiltTargetCoord = 1;
-                tiltStepper.moveTo(-i_tiltTargetCoord);
+                tiltStepper.move(-i_tiltTargetCoord);
                 i_tiltTargetCoord++;
                 tiltStepper.run();
                 if(b_serialDebugPrint == true)
