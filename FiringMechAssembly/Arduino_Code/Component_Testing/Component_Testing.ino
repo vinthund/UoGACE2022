@@ -64,12 +64,13 @@ int i_tiltUpHallDetect;
 
 
 //dev
-int targetPos = 54; //Target position in steps
+int i_panScanRange = 50;
+int i_tiltScanRange = 50;
 
 
 void setup() {
   //Comms Setup
-  Serial.begin(9600);
+  Serial.begin(74880);
   Serial.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
   Serial.println("Machine Vision Foam Dart Sentry");
   Serial.println("-------------------------------");
@@ -106,18 +107,18 @@ void setup() {
 
   //Dev
   panStepper.setMaxSpeed(1000.0); //This sets the maximum speed, datatype is float.
-    panStepper.setAcceleration(25.0); //This sets the acceleration and deceleration rates in steps/s, datatype is float.
-    panStepper.setSpeed(50.0);
-    tiltStepper.setMaxSpeed(1000.0); //This sets the maximum speed, datatype is float.
-    tiltStepper.setAcceleration(25.0); //This sets the acceleration and deceleration rates in steps/s, datatype is float.
-    tiltStepper.setSpeed(50.0);
+  panStepper.setAcceleration(25.0); //This sets the acceleration and deceleration rates in steps/s, datatype is float.
+  tiltStepper.setMaxSpeed(1000.0); //This sets the maximum speed, datatype is float.
+  tiltStepper.setAcceleration(25.0); //This sets the acceleration and deceleration rates in steps/s, datatype is float.
 
-    test_all();
+  homing_func();
   
 }
 
 //Loop Function
 void loop() {
+
+  scanning_func();
 
 }
 
@@ -215,123 +216,74 @@ void fire() //Contains the function to fire the selected dart
 
 void homing_func() //Contains the function for homing the pan/tilt head
 {
-    if(b_tiltAxisHomed == false) // This section will home the tilt axis, it will run first.
-    {
-        tiltStepper.setSpeed(100);
-        tiltStepper.setAcceleration(50);
-        if(i_tiltUpHallDetect == 0)
-        {
-            i_tiltHomingDirection = 1;
-            i_tiltTargetCoord = 133; /* If a tilt up/down hall effect is detected, axis is 30˚ from home
-                                        Tilt stepper  = 1.8˚/step, 4:1 gearing ratio + half stepping = 133 steps to get back home */
-            tiltStepper.stop(); //Stops the mech in the 
-            tiltStepper.move(i_tiltTargetCoord); /* Drive CW back to approx tilt home hall effect,
-                                                    The 'move' class variable will move the mech relative to the current position. */
-            tiltStepper.run();
-            if(b_serialDebugPrint = true)
-            {
-                Serial.println("Tilt axis pointing up, seeking tilt axis home hall effect sensor.");  
-            }
-        }
+  //Tilt Up till Limit
+  tiltStepper.setSpeed(-100);
+  while(digitalRead(ci_tiltUpHallPin) == 1){
+    tiltStepper.runSpeed();
+  }
+  tiltStepper.stop();
+  i_tiltUpHallDetect = tiltStepper.currentPosition();
+  delay(200);
 
-        if(i_tiltDownHallDetect == 0)
-        {
-            i_tiltHomingDirection = 2;
-            i_tiltTargetCoord = 133;
-            tiltStepper.stop(); 
-            tiltStepper.move(-i_tiltTargetCoord); // Drive CCW back to approx tilt home hall effect
-            tiltStepper.run();
-            if(b_serialDebugPrint = true)
-            {
-                Serial.println("Tilt axis pointing down, seeking tilt axis home hall effect sensor.");  
-            }
-        }
+  //Tilt Down till Limit
+  tiltStepper.setSpeed(100);
+  while(digitalRead(ci_tiltDownHallPin) == 1){
+    tiltStepper.runSpeed();
+  }
+  tiltStepper.stop();
+  i_tiltDownHallDetect = tiltStepper.currentPosition();
+  delay(200);
 
-        if(tiltStepper.distanceToGo() == 0 && i_tiltHomeHallDetect == 1) // if it has walked past the tilt home hall
-        {
-            if(i_tiltHomingDirection == 0)
-            {
-                i_tiltTargetCoord = 1;
-                tiltStepper.move(i_tiltTargetCoord);
-                i_tiltTargetCoord++;
-                tiltStepper.run();
-                if(b_serialDebugPrint == true)
-                {
-                    Serial.println("Tilt axis not at a limiting hall effect sensor, homing slowly...");
-                }
-            }
-            
-            if(i_tiltHomingDirection == 1)
-            {
-                i_tiltTargetCoord = 1;
-                tiltStepper.move(i_tiltTargetCoord);
-                i_tiltTargetCoord++;
-                tiltStepper.run();
-                if(b_serialDebugPrint == true)
-                {
-                    Serial.println("Tilt axis overshot tilt home hall effect, seeking tilt hall effect sensor.");
-                }
-            }
-            
-            if(i_tiltHomingDirection == 2)
-            {
-                i_tiltTargetCoord = 1;
-                tiltStepper.move(-i_tiltTargetCoord);
-                i_tiltTargetCoord++;
-                tiltStepper.run();
-                if(b_serialDebugPrint == true)
-                {
-                    Serial.println("Tilt axis overshot tilt home hall effect, seeking tilt hall effect sensor.");
-                }
-            }
-        }
+  //Calculate mid then move to.
+  if (i_tiltDownHallDetect > i_tiltUpHallDetect) {
+    i_tiltHomeHallDetect = ((i_tiltDownHallDetect - i_tiltUpHallDetect) / 2) + i_tiltUpHallDetect;
+  }
+  else {
+    i_tiltHomeHallDetect = ((i_tiltUpHallDetect - i_tiltDownHallDetect) / 2) + i_tiltDownHallDetect;
+  }
+  tiltStepper.moveTo(i_tiltHomeHallDetect);
+  while(tiltStepper.currentPosition() != i_tiltHomeHallDetect){
+    tiltStepper.run();
+  }
+  tiltStepper.stop();
+  delay(200);
 
-        if(i_tiltHomeHallDetect == 0) // If home hall effect is detected
-        {
-            tiltStepper.stop();
-            tiltStepper.setCurrentPosition(0);
-            if(b_serialDebugPrint == true)
-            {
-                Serial.println("Tilt axis homed!");
-            }
-            b_tiltAxisHomed = true;
-        }
-    }// end of tilt homing
-
-    if(b_tiltAxisHomed == true) // Only enter this function once tilt axis has been homed
-    {
-        panStepper.setSpeed(100);
-        panStepper.setAcceleration(50);
-        
-        if(i_panHomeHallDetect == 1) // If the pan hall effect is not detected
-        {
-            i_panTargetCoord = 1;
-            panStepper.moveTo(i_panTargetCoord);
-            i_panTargetCoord++;
-            panStepper.run();
-            if(b_serialDebugPrint == true)
-            {
-                Serial.println("Seeking pan axis home hall effect...");
-            }
-        }
-
-        if(i_panHomeHallDetect == 0)
-        { 
-            panStepper.stop();
-            panStepper.setCurrentPosition(0);
-            if(b_serialDebugPrint == true)
-            {
-                Serial.println("Pan axis homed!");
-            }
-            b_panAxisHomed = true;
-            i_stateMachine = 2; // Enter 'tracking_func' state
-        }
-    }
+  //Home Pan
+  panStepper.setSpeed(100);
+  while(digitalRead(ci_panHomeHallPin) == 1){
+    panStepper.runSpeed();
+  }
+  panStepper.stop();
+  delay(200);
+  
 }// end of homing_func
 
 void scanning_func() //Contains the function for 'scanning' for potential tartets
 {
+  //Pan Stepper Control
+    if(panStepper.distanceToGo() == 0 )
+    {
+        panStepper.moveTo(i_panScanRange);
+    }
 
+    if(panStepper.distanceToGo() == i_panScanRange)
+    {
+        panStepper.moveTo(-i_panScanRange);
+    }
+    
+    //Tilt Stepper Control
+    if(tiltStepper.distanceToGo() == 0 )
+    {
+        tiltStepper.moveTo(i_tiltScanRange);
+    }
+
+    if(panStepper.distanceToGo() == i_tiltScanRange)
+    {
+        panStepper.moveTo(-i_tiltScanRange);
+    }
+
+    panStepper.run();
+    tiltStepper.run();
 }
 
 void tracking_func() //Contains the function for 'tracking' a target once it has been identified
