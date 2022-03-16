@@ -81,11 +81,6 @@ void homing_func() //Contains the function for homing the pan/tilt head
 {
     if(b_tiltAxisHomed == false) // This section will home the tilt axis, it will run first.
     {
-        i_tiltUpHallDetect = digitalRead(ci_tiltUpHallPin);
-        i_tiltDownHallDetect = digitalRead(ci_tiltDownHallPin);
-        i_tiltHomeHallDetect = digitalRead(ci_tiltHomeHallPin);
-        i_panHomeHallDetect = digitalRead(ci_panHomeHallPin);
-
         tiltStepper.setSpeed(100);
         tiltStepper.setAcceleration(50);
         if(i_tiltUpHallDetect == 0)
