@@ -64,16 +64,18 @@ int i_tiltUpHallDetect;
 
 
 //dev
-int i_panScanRange = 50;
-int i_tiltScanRange = 50;
+int i_panScanRange = 200;
+int i_tiltScanRange = 100;
+bool b_panScanDir = 0;
+bool b_tiltScanDir = 0;
 
 
 void setup() {
   //Comms Setup
   Serial.begin(74880);
-  Serial.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\n");
+  Serial.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
   Serial.println("Machine Vision Foam Dart Sentry");
-  Serial.println("-------------------------------");
+  Serial.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
   Wire.begin();
 
   //Firing Motor Setup
@@ -117,53 +119,11 @@ void setup() {
 
 //Loop Function
 void loop() {
-
   scanning_func();
-
 }
 
 
 //---------------- Custom Functions ----------------\\
-
-
-void test_all(){
-  int i = 0;
-  while(i < 2000){
-    if(panStepper.distanceToGo() == 0) //distanceToGo returns the distance in steps from the current position in steps to that set by moveTo.
-    {
-        panStepper.moveTo(targetPos); 
-    }
-    
-    if(panStepper.currentPosition() == targetPos) //currentPosition calls the stepper motors current position.
-    {
-        panStepper.moveTo(-targetPos); //Setting a negative moveTo distance will drive it past the 0 (home) point, wherever that may be.
-    }
-    panStepper.run();
-    delay(1);
-    i++;
-  }
-
-  i = 0;
-  while(i < 2000){
-    if(tiltStepper.distanceToGo() == 0) //distanceToGo returns the distance in steps from the current position in steps to that set by moveTo.
-    {
-        tiltStepper.moveTo(targetPos); 
-    }
-    
-    if(tiltStepper.currentPosition() == targetPos) //currentPosition calls the stepper motors current position.
-    {
-        tiltStepper.moveTo(-targetPos); //Setting a negative moveTo distance will drive it past the 0 (home) point, wherever that may be.
-    }
-    tiltStepper.run();
-    delay(1);
-    i++;
-  }
-  
-  home_mag();
-  spinUp();
-  fire();
-  spinDown();
-}
 
 void home_mag() //Contains the function for homing the magazine to dart zero
 {
@@ -254,6 +214,7 @@ void homing_func() //Contains the function for homing the pan/tilt head
     panStepper.runSpeed();
   }
   panStepper.stop();
+  i_panHomeHallDetect = panStepper.currentPosition();
   delay(200);
   
 }// end of homing_func
@@ -261,29 +222,31 @@ void homing_func() //Contains the function for homing the pan/tilt head
 void scanning_func() //Contains the function for 'scanning' for potential tartets
 {
   //Pan Stepper Control
-    if(panStepper.distanceToGo() == 0 )
-    {
-        panStepper.moveTo(i_panScanRange);
-    }
+  if(b_panScanDir == 0){
+    panStepper.moveTo(i_panHomeHallDetect - i_panScanRange);
+  }
+  else{
+    panStepper.moveTo(i_panHomeHallDetect + i_panScanRange);
+  }
 
-    if(panStepper.distanceToGo() == i_panScanRange)
-    {
-        panStepper.moveTo(-i_panScanRange);
-    }
+  if(panStepper.distanceToGo() == 0){
+    b_panScanDir = !b_panScanDir;
+  }
     
-    //Tilt Stepper Control
-    if(tiltStepper.distanceToGo() == 0 )
-    {
-        tiltStepper.moveTo(i_tiltScanRange);
-    }
+  //Tilt Stepper Control
+  if(b_tiltScanDir == 0){
+    tiltStepper.moveTo(i_tiltHomeHallDetect - i_tiltScanRange);
+  }
+  else{
+    tiltStepper.moveTo(i_tiltHomeHallDetect + i_tiltScanRange);
+  }
 
-    if(panStepper.distanceToGo() == i_tiltScanRange)
-    {
-        panStepper.moveTo(-i_tiltScanRange);
-    }
+  if(tiltStepper.distanceToGo() == 0){
+    b_tiltScanDir = !b_tiltScanDir;
+  }
 
-    panStepper.run();
-    tiltStepper.run();
+  panStepper.run();
+  tiltStepper.run();
 }
 
 void tracking_func() //Contains the function for 'tracking' a target once it has been identified
