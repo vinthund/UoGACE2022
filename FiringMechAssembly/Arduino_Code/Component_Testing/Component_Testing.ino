@@ -2,27 +2,67 @@
 #include <Ramp.h>
 #include <Wire.h>
 #include <AS5600.h>
+#include <AccelStepper.h>
 
-#define servo_pin 10
-#define motors_pin 5
-#define mag_step 2
-#define stepper_pos A5
-#define pan_dir 3
-#define pan_step 4
-//#define button 13
-
+//Definitions
+#define motorInterfaceType 1
 #define vmaxPWM 30
 
-Servo servo;
+//Stepper pins
+const int ci_magStepPin = 2;
+const int ci_magDirPin = A2;
+const int ci_panStepPin = 4;
+const int ci_panDirPin = 3;
+const int ci_tiltStepPin = A0;
+const int ci_tiltDirPin = A1;
+
+//Servo Pins
+const int ci_servoPin = 10;
+
+//Motor Pins
+const int ci_motorPin = 5;
+
+//Hall effect pins
+const int ci_panHomeHallPin = 6;
+//const int ci_panLeftHallPin = 7; // Not used
+//const int ci_panRghtHallPin = 8; // Not used
+const int ci_tiltHomeHallPin = 11; 
+const int ci_tiltDownHallPin = 9;
+const int ci_tiltUpHallPin = 8;
+
+//Declarations
+Servo magServo;
 ramp motorRamp;
-AMS_5600 ams5600;
+AMS_5600 magSensor;
+AccelStepper panStepper (motorInterfaceType, ci_panStepPin, ci_panDirPin);
+AccelStepper tiltStepper (motorInterfaceType, ci_tiltStepPin, ci_tiltDirPin);
+AccelStepper magStepper (motorInterfaceType, ci_magStepPin, ci_magDirPin);
 
-byte out = 10;
-byte in = 130;
+//Constants
+const int ci_dartPos[12] = { 250 , 568, 938, 1275, 1609, 1973, 2293, 2616, 2949, 3332, 3668, 3991 };
+const byte cb_servoIn = 130;
+const byte cb_servoOut = 10;
+const byte cb_vMaxPWM = 30;
+const int ci_motorSpinUpPeriod = 5000;
+const int ci_maxMagSpeed = 100;
 
-bool dir = 1;
+//Variables
+bool b_serialDebugPrint = false; //enables serial debug text
+bool b_panAxisHomed = false;
+bool b_tiltAxisHomed = false;
+int i_stateMachine = 0; //Store variable for state machine switch case
+int i_tiltHomingDirection; //0 = was previously pointing up, 1 = was previously pointing down
+int i_panTargetCoord = 0; //Store the target coordinate for the pan axis
+int i_tiltTargetCoord = 0; //Store the target coordinate for the tilt axis
+int i_panHomeHallDetect;
+//int i_panLeftHallDetect; // Not used
+//int i_panRghtHallDetect; // Not used
+int i_tiltHomeHallDetect;
+int i_tiltDownHallDetect;
+int i_tiltUpHallDetect;
 
-int dart[12] = { 18 , 48, 78, 108, 138, 168, 198, 228, 258, 288, 318, 348 };
+
+
 //dev
 int i_panScanRange = 200;
 int i_tiltScanRange = 100;
@@ -33,36 +73,39 @@ bool b_tiltScanDir = 0;
 void setup() {
   //Comms Setup
   Serial.begin(74880);
-  Serial.println("HELLO");
   Serial.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
   Serial.println("Machine Vision Foam Dart Sentry");
   Serial.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
   Wire.begin();
 
+  //Firing Motor Setup
+  digitalWrite(ci_motorPin, 0);
+
   //Servo Pin Setup
-  servo.attach(servo_pin);
+  magServo.attach(ci_servoPin);
+  magServo.write(cb_servoOut);
 
-  //Stepper Pin Setup
-  pinMode(stepper, OUTPUT);
+  //Stepper Setups
+  magStepper.setMaxSpeed(ci_maxMagSpeed);
 
-  //Pan Stepper Setup
-  pinMode(pan_dir, OUTPUT);
-  pinMode(pan_step, OUTPUT);
+  //Output pins
+  pinMode(ci_panStepPin, OUTPUT);
+  pinMode(ci_panDirPin, OUTPUT);
+  pinMode(ci_tiltStepPin, OUTPUT);
+  pinMode(ci_tiltDirPin, OUTPUT);
+  pinMode(ci_magStepPin, OUTPUT);
+  pinMode(ci_magDirPin, OUTPUT);
+  pinMode(ci_motorPin, OUTPUT);
 
-  //Tilt Stepper Setup
-  //pinMode(tilt_dir, OUTPUT);
-  //pinMode(tilt_step, OUTPUT);
+  //Input pins
+  pinMode(ci_panHomeHallPin, INPUT);
+  //pinMode(ci_panLeftHallPin, INPUT); // Not used
+  //pinMode(ci_panRghtHallPin, INPUT); // Not used
+  pinMode(ci_tiltHomeHallPin, INPUT);
+  pinMode(ci_tiltDownHallPin, INPUT);
+  pinMode(ci_tiltUpHallPin, INPUT);
 
-  //Stepper Position Setup
-  pinMode(stepper_pos, INPUT);
 
-  //Firing Motor Pin Setup
-  pinMode(motors_pin, OUTPUT);
-  //digitalWrite(motors_pin, LOW);
-
-  //Firing Motor Control Setup
-  delay(5000);
-  motorRamp.go(vmaxPWM, 5000);
 
   //Dev
   panStepper.setMaxSpeed(1000.0); //This sets the maximum speed, datatype is float.
@@ -74,10 +117,8 @@ void setup() {
   
 }
 
+//Loop Function
 void loop() {
-
-  //Firing Motor Control Example
-  //analogWrite(motors_pin, motorRamp.update());
   scanning_func();
 }
 
@@ -89,45 +130,52 @@ void home_mag() //Contains the function for homing the magazine to dart zero
    goToDart(0);
 }
 
-  //Spinning Stepper Motor
-  if(Serial.available()) {
-    if(Serial.read() == 'a') {
-      dir = 1;
-      Serial.read();
+void goToDart(byte dart) //Contains the function for selecting a dart
+{
+  while(1)
+  {
+    delay(30);
+    int i_tmp = magSensor.getRawAngle();
+    int i_d = ci_dartPos[dart] - i_tmp;
+    if ( i_tmp > (ci_dartPos[dart] - 3) && i_tmp < (ci_dartPos[dart] + 3)) {
+      return 0;
+    }
+    else if ( i_tmp > ci_dartPos[dart]) {
+      magStepper.setSpeed(50); 
+      magStepper.runSpeed();
     }
     else {
-      dir = 0;
+      magStepper.setSpeed(-50); 
+      magStepper.runSpeed();
     }
-    Serial.println(dir);
   }
-  digitalWrite(pan_dir, dir);
-  digitalWrite(pan_step, LOW);
-  delayMicroseconds(1000);
-  digitalWrite(pan_step,HIGH);
-  delayMicroseconds(1000);
-    
-  //Stepper Motor Position Monitor
-  //Serial.println(String(convertRawAngleToDegrees(ams5600.getRawAngle()),DEC));
-  //delay(20);
-
-  //Servo Control
-  //Serial.println(in);
-  //digitalWrite(LED_BUILTIN,HIGH);
-  //servo.write(in);
-  //delay(2000);
-  //digitalWrite(LED_BUILTIN,LOW);
-  //Serial.println(out);
-  //servo.write(out);
-  //delay(2000);
- 
 }
 
-//Convert Raw output from AS5600 to Angle in Degrees
-float convertRawAngleToDegrees(word newAngle)
+void spinUp() //Contains the function for spinning up the firing motors
 {
-  /* Raw data reports 0 - 4095 segments, which is 0.087 of a degree */
-  float retVal = newAngle * 0.087;
-  return retVal;
+  motorRamp.go(0);
+  motorRamp.go(cb_vMaxPWM, ci_motorSpinUpPeriod);
+  while(motorRamp.update() != cb_vMaxPWM)
+  {
+    analogWrite(ci_motorPin, motorRamp.update());
+  }
+}
+
+void spinDown() //Contains the function for spinning down the firing motors
+{
+  analogWrite(ci_motorPin, 0);
+}
+
+void fire() //Contains the function to fire the selected dart
+{
+  magServo.write(cb_servoIn);
+  delay(400);
+  magServo.write(cb_servoOut);
+  delay(400);
+}
+
+void homing_func() //Contains the function for homing the pan/tilt head
+{
   //Tilt Up till Limit
   tiltStepper.setSpeed(-100);
   while(digitalRead(ci_tiltUpHallPin) == 1){
@@ -200,3 +248,19 @@ void scanning_func() //Contains the function for 'scanning' for potential tartet
   panStepper.run();
   tiltStepper.run();
 }
+
+void tracking_func() //Contains the function for 'tracking' a target once it has been identified
+{
+    if(Serial.available() > 0)
+    {
+        /* 
+            Add code here that accepts users coordinates
+            Checks to see if inputted coordinates are within bounds of acceptable movement
+            And drives mechanism to user specified coordinates
+        */
+       if(i_tiltTargetCoord > -133 || i_tiltTargetCoord > 133)
+       {
+           Serial.println("Please enter a value between -133 (Look up) and 133 (Look down).");
+       }
+    }
+} //End of tracking_func
