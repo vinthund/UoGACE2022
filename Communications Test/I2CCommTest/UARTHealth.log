@@ -1,0 +1,12 @@
+2022-03-16 23:12:38,420:INFO:Message Written to Arduino
+2022-03-16 23:12:38,421:INFO:Coordinate: (450,0)
+2022-03-16 23:12:39,433:INFO:Message Read from Arduino
+2022-03-16 23:12:39,435:WARNING:Arduino: Mechanical Error
+2022-03-16 23:12:40,538:INFO:Message Read from Arduino
+2022-03-16 23:12:40,539:INFO:Message Written to Arduino
+2022-03-16 23:12:40,540:INFO:Coordinate: (450,0)
+2022-03-16 23:12:41,643:INFO:Message Read from Arduino
+2022-03-16 23:12:41,644:WARNING:Arduino: Mechanical Error
+2022-03-16 23:12:42,747:INFO:Message Read from Arduino
+2022-03-16 23:12:42,748:INFO:Message Written to Arduino
+2022-03-16 23:12:42,749:INFO:Coordinate: (450,0)
