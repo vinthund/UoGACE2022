@@ -19,15 +19,11 @@ y = 0
 
 
 def i2cRead():
-    #if ser.in_waiting > 0:
-            #data = ser.readline().decode('utf-8').rstrip()
     data = ser.readline().decode('utf-8').rstrip()
     logging.info("Message Read from Arduino")
     return int(float(data))
 
 def i2cWrite(msg):
-    #for c in msg:
-        #ser.write(ord(c))
     msg = str.encode(msg)
     ser.write(msg)
     logging.info("Message Written to Arduino")

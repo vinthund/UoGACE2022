@@ -10,3 +10,15 @@
 2022-03-16 23:12:42,747:INFO:Message Read from Arduino
 2022-03-16 23:12:42,748:INFO:Message Written to Arduino
 2022-03-16 23:12:42,749:INFO:Coordinate: (450,0)
+2022-03-16 23:29:13,197:INFO:Message Written to Arduino
+2022-03-16 23:29:13,198:INFO:Coordinate: (450,0)
+2022-03-16 23:29:14,210:INFO:Message Read from Arduino
+2022-03-16 23:29:14,211:WARNING:Arduino: Mechanical Error
+2022-03-16 23:29:15,315:INFO:Message Read from Arduino
+2022-03-16 23:29:15,316:INFO:Message Written to Arduino
+2022-03-16 23:29:15,317:INFO:Coordinate: (450,0)
+2022-03-16 23:29:16,420:INFO:Message Read from Arduino
+2022-03-16 23:29:16,421:WARNING:Arduino: Mechanical Error
+2022-03-16 23:29:17,525:INFO:Message Read from Arduino
+2022-03-16 23:29:17,527:INFO:Message Written to Arduino
+2022-03-16 23:29:17,528:INFO:Coordinate: (450,0)
