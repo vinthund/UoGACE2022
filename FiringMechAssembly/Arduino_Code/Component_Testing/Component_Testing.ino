@@ -112,6 +112,7 @@ void setup()
   tiltStepper.setAcceleration(25.0); //This sets the acceleration and deceleration rates in steps/s, datatype is float.
 
   homing_func(); // Homes the mechanism before entering the main program loop
+  home_mag(); // Homes the magazine lining up the first dart
 }
 
 //Loop Function
