@@ -125,6 +125,7 @@ Some additional capacitors and a diode help to reduce input shock current (and t
 * Four Male to Female Jumper wires
 * Four Male to Male Jumper wires
 * Logic Level Shifter: Bi-Directional Module (Between 3V3 and 5V)
+* Ethernet Cable: To allow for ssh into Pi to script in Python.
 
 In order to make the control of the Firing Mechanism possible through communication between the Jetson Nano and the Arduino (shown on above diagram), a communications protocol had to be utilised. Types of communications protocols, such as I2C(Inter-Integrated Circuit), USB(Universal Serial Bus) Serial and SPI(Serial Peripheral Interface) were each investigated to see which would work efficiently when communicating between a Jetson Nano and an Arduino. As a Jetson Nano was not in possession, a Raspberry Pi was instead used to just simulate how certain communications protocols would work with each other.
 
@@ -135,6 +136,7 @@ Other protocols such as I2C and SPI were explored. According to research, when c
 This, was initially the case, on utilising I2C Communication to transmit data between the Raspberry Pi and the Arduino. Unfortunately though, as the gun firing mech used a sensor which required the Arduino to be a master over I2C, this idea of using I2C could not be applied. Providentially, there was another type of communications I had found through research, named Serial UART. Serial UART, according to research, is a "hardware communication protocol" that uses "asynchronous serial communication", meaning that unlike I2C, it does not have to synchronise to a clock signal. UART was made possible with a library named **SoftwareSerial** on the Arduino, and a library named **Serial** on Python were used to replace the original I2C system implemented.
 
 **Setup**
+
 [I2C]
 The Arduino's SDA (Serial Data) was connected to the High Voltage(HV) pin 1, SCL (Serial Clock) at HV2, Arduino 5V at the HV input pin and Arduino Ground to the shifter's Ground. These were connected to the High Voltage due to the Arduino operating at an output of 5V.
 
