@@ -32,15 +32,15 @@ y = 0
 #The data is then converted into float, then to int to increase its numerical range. Just using int will not work.
 def UARTRead():
     data = ser.readline().decode('utf-8').rstrip()
-    logging.info("Message Read from Arduino")
+    logging.info(f'Message from Arduino: {data}')
     return int(float(data))
 
 #Below function deals with writing a message to the Arduino through string encoding. It accepts the parameter "msg" so that whenever it is called,
 #it can take any message and encode it as a string. Using it without encoding raises a TypeError.
 def UARTWrite(msg):
+    logging.info(f'Message Written to Arduino: {msg}')
     msg = str.encode(msg)
     ser.write(msg)
-    logging.info("Message Written to Arduino")
     return -1
 
 #Below function deals with receiving the numerical information sent from the Arduino. This is inspired by API Status Calls which often use

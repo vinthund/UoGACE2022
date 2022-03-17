@@ -4632,3 +4632,52 @@
 2022-03-17 18:47:23,826:INFO:Coordinate: (450,0)
 2022-03-17 18:47:24,938:INFO:Message Read from Arduino
 2022-03-17 18:47:24,939:INFO:Arduino: Device Healthy
+2022-03-17 18:52:35,492:INFO:Message Written to Arduino: b'(450,0)'
+2022-03-17 18:52:35,493:INFO:Coordinate: (450,0)
+2022-03-17 18:52:35,541:INFO:Message from Arduino: 100
+2022-03-17 18:52:35,542:INFO:Arduino: Device Healthy
+2022-03-17 18:52:36,648:INFO:Message from Arduino: 100
+2022-03-17 18:52:36,649:INFO:Message Written to Arduino: b'(450,0)'
+2022-03-17 18:52:36,650:INFO:Coordinate: (450,0)
+2022-03-17 18:52:37,763:INFO:Message from Arduino: 100
+2022-03-17 18:52:37,764:INFO:Arduino: Device Healthy
+2022-03-17 18:52:38,869:INFO:Message from Arduino: 100
+2022-03-17 18:52:38,870:INFO:Message Written to Arduino: b'(450,0)'
+2022-03-17 18:52:38,871:INFO:Coordinate: (450,0)
+2022-03-17 18:52:39,984:INFO:Message from Arduino: 100
+2022-03-17 18:52:39,985:INFO:Arduino: Device Healthy
+2022-03-17 18:52:41,090:INFO:Message from Arduino: 100
+2022-03-17 18:52:41,091:INFO:Message Written to Arduino: b'(450,0)'
+2022-03-17 18:52:41,092:INFO:Coordinate: (450,0)
+2022-03-17 18:52:42,204:INFO:Message from Arduino: 100
+2022-03-17 18:52:42,206:INFO:Arduino: Device Healthy
+2022-03-17 18:52:43,310:INFO:Message from Arduino: 100
+2022-03-17 18:52:43,312:INFO:Message Written to Arduino: b'(450,0)'
+2022-03-17 18:52:43,313:INFO:Coordinate: (450,0)
+2022-03-17 18:53:53,279:INFO:Message Written to Arduino: (450,0)
+2022-03-17 18:53:53,279:INFO:Coordinate: (450,0)
+2022-03-17 18:53:54,392:INFO:Message from Arduino: 100
+2022-03-17 18:53:54,393:INFO:Arduino: Device Healthy
+2022-03-17 18:53:55,496:INFO:Message from Arduino: 100
+2022-03-17 18:53:55,497:INFO:Message Written to Arduino: (450,0)
+2022-03-17 18:53:55,498:INFO:Coordinate: (450,0)
+2022-03-17 18:53:56,610:INFO:Message from Arduino: 100
+2022-03-17 18:53:56,612:INFO:Arduino: Device Healthy
+2022-03-17 18:53:57,714:INFO:Message from Arduino: 100
+2022-03-17 18:53:57,716:INFO:Message Written to Arduino: (450,0)
+2022-03-17 18:53:57,717:INFO:Coordinate: (450,0)
+2022-03-17 18:54:03,179:INFO:Message from Arduino: 1
+2022-03-17 18:54:03,180:INFO:Arduino: Connection Established. Device Healthy
+2022-03-17 18:54:04,283:INFO:Message from Arduino: 100
+2022-03-17 18:54:04,284:INFO:Message Written to Arduino: (450,0)
+2022-03-17 18:54:04,285:INFO:Coordinate: (450,0)
+2022-03-17 18:54:05,413:INFO:Message from Arduino: 100
+2022-03-17 18:54:05,414:INFO:Arduino: Device Healthy
+2022-03-17 18:54:06,518:INFO:Message from Arduino: 100
+2022-03-17 18:54:06,519:INFO:Message Written to Arduino: (450,0)
+2022-03-17 18:54:06,519:INFO:Coordinate: (450,0)
+2022-03-17 18:54:07,633:INFO:Message from Arduino: 100
+2022-03-17 18:54:07,634:INFO:Arduino: Device Healthy
+2022-03-17 18:54:08,739:INFO:Message from Arduino: 100
+2022-03-17 18:54:08,742:INFO:Message Written to Arduino: (450,0)
+2022-03-17 18:54:08,743:INFO:Coordinate: (450,0)
