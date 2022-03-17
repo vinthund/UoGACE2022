@@ -1,25 +1,27 @@
-#include <Servo.h>
-#include <Ramp.h>
-#include <Wire.h>
-#include <AS5600.h>
-#include <AccelStepper.h>
+#include <Servo.h>        // Standard Arduino library for controlling servos
+#include <Ramp.h>         // Standard Arduino library used to interpolate between values
+#include <Wire.h>         // Standard Arduino I2C library
+#include <AS5600.h>       // AS5600 library can be found here: https://github.com/Seeed-Studio/Seeed_Arduino_AS5600 
+#include <AccelStepper.h> // AccelStepper library can be found here: https://github.com/waspinator/AccelStepper
+                          // AccelStepper's class references can be found herehttps://www.airspayce.com/mikem/arduino/AccelStepper/classAccelStepper.html#details 
 
 //Definitions
-#define motorInterfaceType 1
+#define motorInterfaceType 1 // As stepper drivers are being used, this will configure AccelStepper to just send step pulses on a single output pin
 #define vmaxPWM 30
 
 //Stepper pins
-const int ci_magStepPin = 2;
-const int ci_magDirPin = A2;
+const int ci_magStepPin = 2; // Defines the step pulse output pin
+const int ci_magDirPin = A2; // Defines the direction output pin, low = move CCW, high = move CW
+
 const int ci_panStepPin = 4;
 const int ci_panDirPin = 3;
 const int ci_tiltStepPin = A0;
 const int ci_tiltDirPin = A1;
 
-//Servo Pins
+//Servo Pins - For firing mech
 const int ci_servoPin = 10;
 
-//Motor Pins
+//Motor Pins - For firing mech
 const int ci_motorPin = 5;
 
 //Hall effect pins
@@ -31,12 +33,12 @@ const int ci_tiltDownHallPin = 9;
 const int ci_tiltUpHallPin = 8;
 
 //Declarations
-Servo magServo;
-ramp motorRamp;
-AMS_5600 magSensor;
-AccelStepper panStepper (motorInterfaceType, ci_panStepPin, ci_panDirPin);
-AccelStepper tiltStepper (motorInterfaceType, ci_tiltStepPin, ci_tiltDirPin);
-AccelStepper magStepper (motorInterfaceType, ci_magStepPin, ci_magDirPin);
+Servo magServo;     // For firing arm servo on firing mech
+ramp motorRamp;     // For dart flywheels on firing mech
+AMS_5600 magSensor; // For magazines magnetic encoder
+AccelStepper panStepper (motorInterfaceType, ci_panStepPin, ci_panDirPin);    // Pan axis on Pan/Tilt Assembly
+AccelStepper tiltStepper (motorInterfaceType, ci_tiltStepPin, ci_tiltDirPin); // Tilt axis on Pan/Tilt Assembly
+AccelStepper magStepper (motorInterfaceType, ci_magStepPin, ci_magDirPin);    // Stepper used to rotate magazine on firing mech
 
 //Constants
 const int ci_dartPos[12] = { 250 , 568, 938, 1275, 1609, 1973, 2293, 2616, 2949, 3332, 3668, 3991 };
@@ -47,27 +49,28 @@ const int ci_motorSpinUpPeriod = 5000;
 const int ci_maxMagSpeed = 100;
 
 //Variables
-bool b_serialDebugPrint = false; //enables serial debug text
-bool b_panAxisHomed = false;
-bool b_tiltAxisHomed = false;
-int i_stateMachine = 0; //Store variable for state machine switch case
-int i_tiltHomingDirection; //0 = was previously pointing up, 1 = was previously pointing down
+bool b_serialDebugPrint = false; // Enables serial debug text - Variable not currently used
+bool b_panAxisHomed = false;     // Flag to confirm pan axis has been homed - Variable not currently used
+bool b_tiltAxisHomed = false;    // Flag to confirm tilt axis has been homed - Variable not currently used
+int i_stateMachine = 0;          // Store variable for state machine switch case - Variable not currently used
+int i_tiltHomingDirection;       // 0 = was previously pointing up, 1 = was previously pointing down - Variable not currently used
 
-int i_panTargetCoord = 0; //Store the target coordinate for the pan axis
-int i_tiltTargetCoord = 0; //Store the target coordinate for the tilt axis
+int i_panTargetCoord = 0;  // Store the target coordinate for the pan axis - Variable not currently used
+int i_tiltTargetCoord = 0; // Store the target coordinate for the tilt axis - Variable not currently used
 
-int i_panHomeHallDetect;
-int i_tiltHomeHallDetect;
-int i_tiltDownHallDetect;
-int i_tiltUpHallDetect;
+int i_panHomeHallDetect;  // Stores coordinate for where panHomeHallPin was detected
+int i_tiltHomeHallDetect; // Stores coordinate for calculated location of tiltHomeHallPin
+int i_tiltDownHallDetect; // Stores coordinate for where tiltDownHallPin was detected
+int i_tiltUpHallDetect;   // Stores coordiante for where tiltUpHallPin was detected
 
 //dev
-int i_panScanRange = 200;
-int i_tiltScanRange = 100;
-bool b_panScanDir = 0;
-bool b_tiltScanDir = 0;
+int i_panScanRange = 200;  // Used in 'scanning_func' to define target coordinate for pan axis
+int i_tiltScanRange = 100; // Used in 'scanning_func' to define target coordinate for tilt axis
+bool b_panScanDir = 0;     // Used in 'scanning_func' to keep track of whether pan axis has finished panning in one direction
+bool b_tiltScanDir = 0;    // Used in 'scanning_func' to keep track of whether tilt axis has finished tilting in one direction
 
-void setup() {
+void setup() 
+{
   //Comms Setup
   Serial.begin(74880);
   Serial.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
@@ -103,17 +106,17 @@ void setup() {
 
 
   //Dev
-  panStepper.setMaxSpeed(1000.0); //This sets the maximum speed, datatype is float.
-  panStepper.setAcceleration(25.0); //This sets the acceleration and deceleration rates in steps/s, datatype is float.
-  tiltStepper.setMaxSpeed(1000.0); //This sets the maximum speed, datatype is float.
+  panStepper.setMaxSpeed(1000.0);    //This sets the maximum speed, datatype is float.
+  panStepper.setAcceleration(25.0);  //This sets the acceleration and deceleration rates in steps/s, datatype is float.
+  tiltStepper.setMaxSpeed(1000.0);   //This sets the maximum speed, datatype is float.
   tiltStepper.setAcceleration(25.0); //This sets the acceleration and deceleration rates in steps/s, datatype is float.
 
-  homing_func();
-  
+  homing_func(); // Homes the mechanism before entering the main program loop
 }
 
 //Loop Function
-void loop() {
+void loop() 
+{
   scanning_func();
 }
 
@@ -227,7 +230,8 @@ void homing_func() //Contains the function for homing the pan/tilt head
   }
   tiltStepper.stop();
   // Possibly add 'i_tiltHomeHallDetect = tiltStepper.currentPosition(0);' here?
-  // Parsing '0' into 'currentPosition' will set the current location as the Zero point for further coordinates which could be useful.
+  // Parsing '0' into 'currentPosition' will set the current location as the Zero point for further coordinates which could be useful as.
+  // Though this is possibly more relevant for simplifying 'tracking_func' logic, current implementation does work.
   delay(200);
 
   //Home Pan
@@ -263,7 +267,7 @@ void scanning_func() //Contains the function for 'scanning' for potential tartet
 
   if(panStepper.distanceToGo() == 0) // 'distanceToGo' returns how many steps are left until the target value is met
   {
-    b_panScanDir = !b_panScanDir; // Setting this will cause axis to rotate in opposite direction
+    b_panScanDir = !b_panScanDir;    // Setting this will cause axis to rotate in opposite direction
   }
     
   //Tilt Stepper Control
