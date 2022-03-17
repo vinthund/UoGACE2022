@@ -132,14 +132,23 @@ The first iteration of a communications code between the Arduino and the Raspber
 
 Other protocols such as I2C and SPI were explored. According to research, when comparing between I2C and SPI, SPI was a faster option; this did not mean it could be instantly utilised though, as not enough examples of communication between an Arduino and a Jetson/Pi could be found online to make use of SPI. Furthermore, it required more wires to be connected to the Nano through a logic level shifter. Due to this, I2C was settled with. 
 
-**Setup**
+This, was initially the case, on utilising I2C Communication to transmit data between the Raspberry Pi and the Arduino. Unfortunately though, as the gun firing mech used a sensor which required the Arduino to be a master over I2C, this idea of using I2C could not be applied. Providentially, there was another type of communications I had found through research, named Serial UART. Serial UART, according to research, is a "hardware communication protocol" that uses "asynchronous serial communication", meaning that unlike I2C, it does not have to synchronise to a clock signal. UART was made possible with a library named **SoftwareSerial** on the Arduino, and a library named **Serial** on Python were used to replace the original I2C system implemented.
 
+**Setup**
+[I2C]
 The Arduino's SDA (Serial Data) was connected to the High Voltage(HV) pin 1, SCL (Serial Clock) at HV2, Arduino 5V at the HV input pin and Arduino Ground to the shifter's Ground. These were connected to the High Voltage due to the Arduino operating at an output of 5V.
 
 The Raspberry Pi's SDA was connected on Low Voltage pin 1, opposite that of the Arduino's SDA connection; SCL was connected to LV2, 3V3 at LV input and Pi Ground to the shifter's ground. The Pi was connected to the Low Voltage side due to the Pi's output voltage being 3V3.
 
 To fully use I2C, the Arduino and the Raspberry Pi's Python 3's libraries were used, being ***wire*** and ***smbus2*** libraries respectively.
+
+[UART]
+SoftwareSerial's library allows for the creation of Rx Tx pins over any digital pins, so 2 and 3 were selected in this case. Pin 2, Rx, was connected to HV1 of the logic level shifter; Pin 3 Tx was connected to HV2. Arduino 5V was connected to the HV of the Level Shifter, along with Arduino Ground connected to the component's ground. Similar steps were taken on the opposite side, with the Raspberry Pi's Tx on pin 8 connected on the opposite of the Arduino's Rx. Same followed for the Pi's pin 10 Rx connected opposite the Arduino's Tx on the shifter. The Pi's 3V3 Power was connected to LV, along with the Pi's ground connected to the component's ground.
+
 ![I22ImagePiArduino](https://user-images.githubusercontent.com/48869133/157861137-2b457d97-22b6-4f79-860c-77544ec5475e.jpg)
+
+![UARTExample](https://user-images.githubusercontent.com/48869133/158718321-f61861dc-86f8-4079-bac4-c2d13c3c3fba.jpg)
+
 <br>
 
 ## **Pan/Tilt Mechanism Communicatons** - [ht5640k](https://www.github.com/ht5640k)
