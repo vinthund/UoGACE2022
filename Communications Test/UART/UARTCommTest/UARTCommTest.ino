@@ -4,20 +4,30 @@
     This is an alternate version of its I2C Counterpart. This code was created due to the Arduino already using I2C to communicate with another device for the gun.
     Thus, another serial communication option had to be selected to make communication work.
 
+    Note that this code is a test environment that assesses the viability of communication between a hypothetical Jetson Nano
+    or the Pi in this case, and the Arduino. So whilst communication will be tested here, things like firing and servo motor control
+    are there as examples to test if mechanical equipment will operate under commands being sent over serial, and to see if they are fast 
+    enough to react to incoming information. It is important that it is fast enough, as in a real world situation, the target will 
+    try to "dodge" the projectiles hence the coordinates constantly changing and streaming said coordinates to move then shoot 
+    at the target.
+
+    Pi <--> Arduino
     Rx <--> Tx
     Tx <--> Rx
     GND <--> GND
 
-    Version 0.4.0
+    Version 0.4.2
    Changes made:
    * Including SoftwareSerial Library to accept data over UART from Raspberry Pi.
    * Using "readStringUntil" to read information being sent from UART Serial.
    * Added requestEvent in main loop as it does not have a setup function anymore, unlike its I2C counterpart which did, thus not requiring for it to be called in void loop.
    * "Wire.write" replaced with mySerial.println due to using a decoder on Python's side. Just using write will not make it appear due to being in different character set.
+   * Addition of comment explaining "readStringUntil()"
+   * Added explanation of this code's nature.
 
 */
 
-// Include the Wire library for I2C
+// Include the SoftwareSerial library for UART
 #include <SoftwareSerial.h>
 #include <Wire.h>
 #include <Servo.h>
@@ -106,7 +116,7 @@ void convertToInt() {
    While it is true that it could instead be done from -90 to 90, doing this does not work, as it limits the servo for some reason into just 90 degrees.
    The conditional statement within the function first checks if movement is true. As you remember, movement was the flag within the
    statusCodes function to check if the values being received were the same or were different. If they were different, it would set "movement" to true.
-   Thus, the below statement checks if this flag is true, then writes on to both servo "x" and "y" the values that were sent over I2C.
+   Thus, the below statement checks if this flag is true, then writes on to both servo "x" and "y" the values that were sent over UART.
    After it has finished writing the values, it sets movement to false to block any further movements.
 */
 void onDetectTarget() {
@@ -132,6 +142,8 @@ void onDetectTarget() {
 void loop() {
   delay(100);
   requestEvent();
+  //Below code deals with reading incoming strings being sent over serial. Essentially, it reads the string "until" there is the the spacing
+  // '\n', it will assign whatever is being sent in the variable "received_str". This variable then gets processed in the convertToInt function.
   received_str = mySerial.readStringUntil('\n');
   toSend = 100;
   statusCodes();
