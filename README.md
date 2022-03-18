@@ -16,7 +16,7 @@ Mechanical parts of this project are mostly custom using standard industry parts
 - [Andrew Dean - ad4646d](https://www.github.com/ad4646d)
 - [Chris Halsall - ch6941r -](https://www.github.com/ch6941r)  [AfterEarthLtd](https://www.github.com/AfterEarthLTD)
 - [vinthund](https://www.github.com/vinthund)
-- [ht5640k](https://www.github.com/ht5640k)
+- [ht5640k - Harshitha Thimmegowda](https://www.github.com/ht5640k)
 - [JoelSmalls - Joel A. Okanta](https://www.github.com/JoelSmalls)
 - [kamyar123](https://www.github.com/kamyar123)
 - [rowBoat](https://www.github.com/rowboat)
@@ -83,7 +83,7 @@ STEP files for the pan-tilt mechanism can be found [here](https://github.com/vin
 ## **Hardware for Pan/Tilt and Firing Mechanisms** - [Chris Halsall - ch6941r](https://www.github.com/ch6941r) & [Andrew Dean - ad4646d](https://www.github.com/ad4646d)
 **Pan/Tilt Mechanism Hardware - [Andrew Dean - ad4646d](https://www.github.com/ad4646d)**
 
-NEMA17 stepper motors were chosen for the Pan/Tilt axis as they provided adequate torque output to move both axes, they also feature a step angle of 1.8˚.
+NEMA17 stepper motors were chosen for the Pan/Tilt axis as they provided adequate torque output to move both axes, they also feature a step angle of 1.8
 * A [NEMA17x34](https://www.omc-stepperonline.com/nema-17-bipolar-1-8deg-26ncm-36-8oz-in-0-4a-12v-42x42x34mm-4-wires.html?search=17hs13) was chosen for the tilt axis
 * A [NEMA17x39](https://www.omc-stepperonline.com/nema-17-bipolar-45ncm-6374ozin-15a-42x42x39mm-4-wires-w--1m-pin-connector.html?search=17HS15-1504S-X1&description=true) was chosen for the pan axis
 
@@ -153,7 +153,7 @@ SoftwareSerial's library allows for the creation of Rx Tx pins over any digital 
 
 <br>
 
-## **Pan/Tilt Mechanism Communicatons** - [ht5640k](https://www.github.com/ht5640k)
+## **Pan/Tilt Mechanism Communicatons** - [ht5640k- Harshitha Thimmegowda ](https://www.github.com/ht5640k)
 
 ***Add your summary of work here and delete this comment.***
 
