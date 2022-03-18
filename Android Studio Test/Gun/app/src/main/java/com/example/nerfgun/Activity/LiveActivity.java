@@ -22,7 +22,7 @@ public class LiveActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private static final String url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mov";
+    private static final String url = "rtsp://wowzaec2demo.streamlock.net/vod/mp4:BigBuckBunny_115k.mp4";
 
     private LibVLC libVlc;
     private MediaPlayer mediaPlayer;
