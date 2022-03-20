@@ -23,7 +23,9 @@ Mechanical parts of this project are mostly custom using standard industry parts
 <br>
 
  ## **Viva Video**
- <iframe width="1022" height="575" src="https://www.youtube.com/embed/HJBah1AWvD8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+ <iframe width="1022" height="575" src="https://www.youtube.com/embed/HJBah1AWvD8" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+ </iframe>
 
  ## **Firing Mechanism Mechanical Design** - [Chris Halsall - ch6941r](https://www.github.com/ch6941r)
 
@@ -45,6 +47,7 @@ Herringbone gears were chosen for both pan and tilt axes for a number of reasons
 ![Herringbone_Gears](https://raw.githubusercontent.com/vinthund/UoGACE2022/main/Pan-TiltAssembly/Documentation/Assets/Herringbone_Gears.jpg)
 
 A plug-in for Fusion 360 called [GF Gear Generator](https://apps.autodesk.com/FUSION/en/Detail/Index?id=1236778940008086660&appLang=en&os=Win64) was used to generate the herringbone gears. \
+
 ![GF_Gear_Screenshot](https://raw.githubusercontent.com/vinthund/UoGACE2022/ad4646d/Pan-TiltAssembly/Documentation/Assets/GF_Gear_Generator_Screenshot_Example.png)
 This produces a finished gear as a body, which can then be adapted 
 
