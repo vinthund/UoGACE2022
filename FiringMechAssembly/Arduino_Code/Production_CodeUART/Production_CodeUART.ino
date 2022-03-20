@@ -113,7 +113,7 @@ void setup()
 }
 
 void activate() {
-  home_mag();
+  /*home_mag();
   spinUp();
   if (ammo < 12) {
     for ( ammo = 0; ammo < 12; ammo++ ) {
@@ -121,7 +121,7 @@ void activate() {
       fire();
     }
   }
-  spinDown();
+  spinDown();*/
 }
 
 
