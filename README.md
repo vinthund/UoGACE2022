@@ -16,7 +16,7 @@ Mechanical parts of this project are mostly custom using standard industry parts
 - [Andrew Dean - ad4646d](https://www.github.com/ad4646d)
 - [Chris Halsall - ch6941r -](https://www.github.com/ch6941r)  [AfterEarthLtd](https://www.github.com/AfterEarthLTD)
 - [vinthund](https://www.github.com/vinthund)
-- [ht5640k](https://www.github.com/ht5640k)
+- [ht5640k - Harshitha Thimmegowda](https://www.github.com/ht5640k)
 - [JoelSmalls - Joel A. Okanta](https://www.github.com/JoelSmalls)
 - [kamyar123](https://www.github.com/kamyar123)
 - [rowBoat](https://www.github.com/rowboat)
@@ -83,7 +83,7 @@ STEP files for the pan-tilt mechanism can be found [here](https://github.com/vin
 ## **Hardware for Pan/Tilt and Firing Mechanisms** - [Chris Halsall - ch6941r](https://www.github.com/ch6941r) & [Andrew Dean - ad4646d](https://www.github.com/ad4646d)
 **Pan/Tilt Mechanism Hardware - [Andrew Dean - ad4646d](https://www.github.com/ad4646d)**
 
-NEMA17 stepper motors were chosen for the Pan/Tilt axis as they provided adequate torque output to move both axes, they also feature a step angle of 1.8˚.
+NEMA17 stepper motors were chosen for the Pan/Tilt axis as they provided adequate torque output to move both axes, they also feature a step angle of 1.8
 * A [NEMA17x34](https://www.omc-stepperonline.com/nema-17-bipolar-1-8deg-26ncm-36-8oz-in-0-4a-12v-42x42x34mm-4-wires.html?search=17hs13) was chosen for the tilt axis
 * A [NEMA17x39](https://www.omc-stepperonline.com/nema-17-bipolar-45ncm-6374ozin-15a-42x42x39mm-4-wires-w--1m-pin-connector.html?search=17HS15-1504S-X1&description=true) was chosen for the pan axis
 
@@ -125,6 +125,7 @@ Some additional capacitors and a diode help to reduce input shock current (and t
 * Four Male to Female Jumper wires
 * Four Male to Male Jumper wires
 * Logic Level Shifter: Bi-Directional Module (Between 3V3 and 5V)
+* Ethernet Cable: To allow for ssh into Pi to script in Python.
 
 In order to make the control of the Firing Mechanism possible through communication between the Jetson Nano and the Arduino (shown on above diagram), a communications protocol had to be utilised. Types of communications protocols, such as I2C(Inter-Integrated Circuit), USB(Universal Serial Bus) Serial and SPI(Serial Peripheral Interface) were each investigated to see which would work efficiently when communicating between a Jetson Nano and an Arduino. As a Jetson Nano was not in possession, a Raspberry Pi was instead used to just simulate how certain communications protocols would work with each other.
 
@@ -132,17 +133,27 @@ The first iteration of a communications code between the Arduino and the Raspber
 
 Other protocols such as I2C and SPI were explored. According to research, when comparing between I2C and SPI, SPI was a faster option; this did not mean it could be instantly utilised though, as not enough examples of communication between an Arduino and a Jetson/Pi could be found online to make use of SPI. Furthermore, it required more wires to be connected to the Nano through a logic level shifter. Due to this, I2C was settled with. 
 
+This, was initially the case, on utilising I2C Communication to transmit data between the Raspberry Pi and the Arduino. Unfortunately though, as the gun firing mech used a sensor which required the Arduino to be a master over I2C, this idea of using I2C could not be applied. Providentially, there was another type of communications I had found through research, named Serial UART. Serial UART, according to research, is a "hardware communication protocol" that uses "asynchronous serial communication", meaning that unlike I2C, it does not have to synchronise to a clock signal. UART was made possible with a library named **SoftwareSerial** on the Arduino, and a library named **Serial** on Python were used to replace the original I2C system implemented.
+
 **Setup**
 
+[I2C]
 The Arduino's SDA (Serial Data) was connected to the High Voltage(HV) pin 1, SCL (Serial Clock) at HV2, Arduino 5V at the HV input pin and Arduino Ground to the shifter's Ground. These were connected to the High Voltage due to the Arduino operating at an output of 5V.
 
 The Raspberry Pi's SDA was connected on Low Voltage pin 1, opposite that of the Arduino's SDA connection; SCL was connected to LV2, 3V3 at LV input and Pi Ground to the shifter's ground. The Pi was connected to the Low Voltage side due to the Pi's output voltage being 3V3.
 
 To fully use I2C, the Arduino and the Raspberry Pi's Python 3's libraries were used, being ***wire*** and ***smbus2*** libraries respectively.
+
+[UART]
+SoftwareSerial's library allows for the creation of Rx Tx pins over any digital pins, so 2 and 3 were selected in this case. Pin 2, Rx, was connected to HV1 of the logic level shifter; Pin 3 Tx was connected to HV2. Arduino 5V was connected to the HV of the Level Shifter, along with Arduino Ground connected to the component's ground. Similar steps were taken on the opposite side, with the Raspberry Pi's Tx on pin 8 connected on the opposite of the Arduino's Rx. Same followed for the Pi's pin 10 Rx connected opposite the Arduino's Tx on the shifter. The Pi's 3V3 Power was connected to LV, along with the Pi's ground connected to the component's ground.
+
 ![I22ImagePiArduino](https://user-images.githubusercontent.com/48869133/157861137-2b457d97-22b6-4f79-860c-77544ec5475e.jpg)
+
+![UARTExample](https://user-images.githubusercontent.com/48869133/158718321-f61861dc-86f8-4079-bac4-c2d13c3c3fba.jpg)
+
 <br>
 
-## **Pan/Tilt Mechanism Communicatons** - [ht5640k](https://www.github.com/ht5640k)
+## **Pan/Tilt Mechanism Communicatons** - [ht5640k- Harshitha Thimmegowda ](https://www.github.com/ht5640k)
 
 ***Add your summary of work here and delete this comment.***
 
@@ -150,7 +161,15 @@ To fully use I2C, the Arduino and the Raspberry Pi's Python 3's libraries were u
 
 ## **Machine Vision Target Aquisition** - [vinthund](https://www.github.com/vinthund)
 
-***Add your summary of work here and delete this comment.***
+Motion Detection in Python Version 0.0.1 Written By Sian Pugh, sp3045k@gre.ac.uk, fleetfootgreyhound@gmail.com, vinthund @ github
+
+Simple backend motion detector written in Python. Intended for use on a Jetson Nano 2gb to communicate with an Arduino system.
+
+Part of a larger project used to control an autonomous nerf sentry - https://github.com/vinthund/UoGACE2022
+
+Currently uses a subtractive method; it will take the first frame of input and store it as the "background", then compare all following frames to this. It has a threshold mechanism in place to ensure that small differences such as shadows are not seen as motion. When motion is detected using this subtractive method, a countour of the motion is drawn, as well as a retangle constructed of the area around it. This rectangle is used for specific targetting, as the center of it is found and then communicated via i2c to the arduino unit. Updates needed: -Mechanism of updating the background when the camera is moved (possibly a database of images of the surrounding area according to pan/tilt?) -RTSP stream to website/app
+
+Dependencies: This program requires the numpy and opencv packages to function. https://numpy.org/ https://opencv.org/
 
 <br>
 
