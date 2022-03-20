@@ -22,8 +22,11 @@ Mechanical parts of this project are mostly custom using standard industry parts
 - [rowBoat](https://www.github.com/rowboat)
 <br>
 
+ ## **Viva Video**
 
-## **Firing Mechanism Mechanical Design** - [Chris Halsall - ch6941r](https://www.github.com/ch6941r)
+[![Viva_Video_Thumbnail](https://github.com/vinthund/UoGACE2022/blob/ad4646d/Project%20Management%20Documentation/Viva_Video_Thumbnail.png)](https://youtu.be/HJBah1AWvD8)
+
+ ## **Firing Mechanism Mechanical Design** - [Chris Halsall - ch6941r](https://www.github.com/ch6941r)
 
 The firing mechanism contains a few pre-made parts including a small stepper motor, the firing motors and barrel, a servo, and a bearing. All other parts have been designed in Fusion 360 and printed in orange PLA on an Ender 3 FDM 3D printer. It features a 12 dart rotary magazine driven by the stepper motor from one end and supported by a bearing at the other end. Through the bearing is mounted a magnet and a magnetic position sensor so that the control electronics can measure the angle of the magazine. A servo is mounted in the base and, with a custom arm, is capable of pushing a dart from the magazine into the firing motors and thus propelling it out of the barrel. A mounting plate is attached to the front of the design to securely mount the camera for machine vision. Finally, a hole and hex slot has been designed in to allow for easy mounting to the pan/tilt mehcanism.
 
@@ -43,6 +46,7 @@ Herringbone gears were chosen for both pan and tilt axes for a number of reasons
 ![Herringbone_Gears](https://raw.githubusercontent.com/vinthund/UoGACE2022/main/Pan-TiltAssembly/Documentation/Assets/Herringbone_Gears.jpg)
 
 A plug-in for Fusion 360 called [GF Gear Generator](https://apps.autodesk.com/FUSION/en/Detail/Index?id=1236778940008086660&appLang=en&os=Win64) was used to generate the herringbone gears. \
+
 ![GF_Gear_Screenshot](https://raw.githubusercontent.com/vinthund/UoGACE2022/ad4646d/Pan-TiltAssembly/Documentation/Assets/GF_Gear_Generator_Screenshot_Example.png)
 This produces a finished gear as a body, which can then be adapted 
 
