@@ -24,7 +24,7 @@ Mechanical parts of this project are mostly custom using standard industry parts
 
  ## **Viva Video**
 
-![[Viva_Video_Thumbnail](https://github.com/vinthund/UoGACE2022/blob/ad4646d/Project%20Management%20Documentation/Viva_Video_Thumbnail.png)](https://youtu.be/HJBah1AWvD8)
+[![Viva_Video_Thumbnail](https://github.com/vinthund/UoGACE2022/blob/ad4646d/Project%20Management%20Documentation/Viva_Video_Thumbnail.png)](https://youtu.be/HJBah1AWvD8)
 
  ## **Firing Mechanism Mechanical Design** - [Chris Halsall - ch6941r](https://www.github.com/ch6941r)
 
