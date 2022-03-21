@@ -6,9 +6,9 @@
 
     Note that this code is a test environment that assesses the viability of communication between a hypothetical Jetson Nano
     or the Pi in this case, and the Arduino. So whilst communication will be tested here, things like firing and servo motor control
-    are there as examples to test if mechanical equipment will operate under commands being sent over serial, and to see if they are fast 
-    enough to react to incoming information. It is important that it is fast enough, as in a real world situation, the target will 
-    try to "dodge" the projectiles hence the coordinates constantly changing and streaming said coordinates to move then shoot 
+    are there as examples to test if mechanical equipment will operate under commands being sent over serial, and to see if they are fast
+    enough to react to incoming information. It is important that it is fast enough, as in a real world situation, the target will
+    try to "dodge" the projectiles hence the coordinates constantly changing and streaming said coordinates to move then shoot
     at the target.
 
     Pi <--> Arduino
@@ -16,14 +16,13 @@
     Tx <--> Rx
     GND <--> GND
 
-    Version 0.4.2
+    Version 0.7.3
    Changes made:
-   * Including SoftwareSerial Library to accept data over UART from Raspberry Pi.
-   * Using "readStringUntil" to read information being sent from UART Serial.
-   * Added requestEvent in main loop as it does not have a setup function anymore, unlike its I2C counterpart which did, thus not requiring for it to be called in void loop.
-   * "Wire.write" replaced with mySerial.println due to using a decoder on Python's side. Just using write will not make it appear due to being in different character set.
-   * Addition of comment explaining "readStringUntil()"
-   * Added explanation of this code's nature.
+       * Added new buffer variable that stores the Ammo and its value which is then sent over Serial to the Pi. It lets the Pi know the amount of bullets remaining when the turret is active.
+       * Addition of new for loop that simulates how the turret is run, this is used to send values ranging from 12 to 0 to the Pi.
+       * Added "reactions" to data being sent by the Pi, just to confirm to the Pi that the Arduino is receiving the information being sent.
+       * Removed list of Serial prints and replaced it with snprintf and one Serial Print, which concatenates the string into a char buffer nicely then prints it over serial respectively.
+       * Added preprocessing directives DEBUG to test out some parts of the code.
 
 */
 
@@ -38,7 +37,9 @@ String received_str = "";
 int toSend;
 int x, y, ammo;
 bool flag, trigger, movement = false;
-char out[30];
+char out[50];
+char buffer[90];
+
 
 void setup() {
   myservo.attach(4);
@@ -67,31 +68,34 @@ void statusCodes() {
   // even though it is receiving the same coordinates.
   static int x_old = 0;
   static int y_old = 0;
-
   if (received_str == "1") {
     Serial.println("Raspberry Pi - Connection Established");
   } else if (received_str == "2") {
+    toSend = 101;
     Serial.println("Raspberry Pi - Data Received");
   } else if (received_str == "100") {
     Serial.println("Raspberry Pi - Status OK");
+    toSend = 101;
   } else if (received_str[0] == '(' ) {
     Serial.println("Coordinates Received, Ready to Delete Target!");
+    toSend = 101;
     //sscanf is used here to read formatted input from a string, then assigns the values to be read onto integer varianbles.
     // in this case, they are set to coordinate "x" and "y" variables.
     int r = sscanf(received_str.c_str(), "(%d, %d)", &x, &y);
-    snprintf(out, 30, "X: %d, Y: %d", x, y);
-
-    Serial.print("X: ");
-    Serial.println(x);
-    Serial.print("Y: ");
-    Serial.println(y);
-
+    snprintf(out, 30, "X: %d\nY: %d", x, y);
+    Serial.print(out);
     // Below conditional statement checks if the current coordinate variables are equal to its previous versions stored on the static int variables.
     // In the case it is, the movement flag is set to false, blocking movement from occuring as no change has occured.
     // However, in the case that it is not the same as its previous version, movement is set to true, then the coordinate variables are stored in the static int variables,
     // so as to be compared to the next values sent.
+
     if (x == x_old && y == y_old) {
       movement = false;
+      for (ammo = 12; ammo >= 0; ammo--) {
+        snprintf( buffer, 90, "Ammo: %d", ammo );
+        mySerial.println( buffer );
+        delay(500);
+      }
     } else {
       movement = true;
       x_old = x;
@@ -145,7 +149,10 @@ void loop() {
   //Below code deals with reading incoming strings being sent over serial. Essentially, it reads the string "until" there is the the spacing
   // '\n', it will assign whatever is being sent in the variable "received_str". This variable then gets processed in the convertToInt function.
   received_str = mySerial.readStringUntil('\n');
-  toSend = 100;
+#ifdef DEBUG
+  //toSend = 100;
+  //Serial.println(toSend);
+#endif
   statusCodes();
   convertToInt();
   onDetectTarget();
