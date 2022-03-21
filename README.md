@@ -117,7 +117,7 @@ The bottom of the board is dedicated to power rails, 0V and 12V from an external
 
 Some additional capacitors and a diode help to reduce input shock current (and therefore prevent brownout) and reverse power connection damage.
 
-![Control Circuitry](/Schematics/circuitry_photo.jpg)
+![Control Circuitry](https://github.com/ch6941r/UoGACE2022/blob/main_ch6941r/Schematics/circuitry_photo.jpg)
 
 <br>
 
