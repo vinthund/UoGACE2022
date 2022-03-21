@@ -1,12 +1,13 @@
 """
 * UART Version of I2C Code due to I2C already being used for a sensor device on the Arduino.
 *
-*     Version 0.6.1
+*     Version 0.8.4
 *     Implementations made:
-* Changed "I2C" in function names to "UART" as this is no longer an I2C Code but a UART Code.
-* Logging oncoming messages.
-* Added comments
-* Added a ValueError exception to capture errors whenever UART disconnects.
+* Added a conditional statement that checks if data is either string or integer through "'ammo' in data".
+* Added new variable ammo to store ammo value being sent over Serial.
+* Added new condition within StatusCodes to detect if it is first receiving a string through 'isinstance' then spliting and taking out the numbers within said string.
+* Added a new log to log remaining ammo.
+* Re-organised numbering structure of errors and status within statuscode function.
 """
 #Importing time module for delays, as they are needed to stop flooding the terminal and Arduino terminal with information.
 import time
@@ -27,13 +28,21 @@ logging.basicConfig(filename='UARTHealth.log', level=logging.DEBUG, format='%(as
 x = 0
 y = 0
 
+#Deals with storing the ammo left within the turret, receives it from Arduino over Serial.
+ammo = 0
+
 #Below function deals with reading data from the Arduino, it first decodes the oncoming bytes into unicode to be make them understandable.
 #This information is then logged into the Log file, along with the message contents.
 #The data is then converted into float, then to int to increase its numerical range. Just using int will not work.
 def UARTRead():
     data = ser.readline().decode('utf-8').rstrip()
     logging.info(f'Message from Arduino: {data}')
-    return int(float(data))
+    #Below Condition checks if the string "Ammo" is within the data being read,
+        #if it is, then it will return it as a string for the ammo reading function, else it will return it as an integer for normal statuses
+    if "Ammo" in data:
+        return str(data)
+    else:
+        return int(float(data))
 
 #Below function deals with writing a message to the Arduino through string encoding. It accepts the parameter "msg" so that whenever it is called,
 #it can take any message and encode it as a string. Using it without encoding raises a TypeError.
@@ -47,32 +56,45 @@ def UARTWrite(msg):
 #numbers to define their errors, like Error 404 which is the most common one. This function defines a variable "n" and assigns whatever is
 #returned into UARTRead into variable n. If this value is equal to any of the conditional statements, then it will print this to the terminal, and
 #log said data. If this number being sent does not exist, or if it is a string, it will throw "Status Unknown".
-def statusCodes():
+def statusCodes(): 
     n = UARTRead()
-    if n == 1:
-        print("Arduino: Connection Established")
+    #Allowing ammo to be accessed everywhere
+    global ammo
+    
+    #IsInstance is used to check if the data within "n" is a string, and if it is, go through a loop that takes only
+        #the number being sent over Serial.
+    if isinstance(n, str):
+        lst = n.split()
+        for i in lst:
+            ammo = ''
+            for j in i: # To extract only numbers from the word
+                if j.isdigit():
+                    ammo+=j
+        #print(ammo)
+        logging.info(f'Ammo: {ammo} Remaining')
+    elif n == 99:
+        print("Arduino: Connection Established!")
         logging.info("Arduino: Connection Established. Device Healthy")
-    elif n == 2:
-        print("Arduino: Data Received!")
-        logging.info("Arduino: Connection Established. Device Healthy")
-    elif n == 21:
-        print("Arduino: Out of Ammo!")
-        logging.warning("Arduino: Out of Ammo!")
-    elif n == 22:
-        print("Shooting Error! Fix Immediately!")
-        logging.warning("Arduino: Shooting Error!")
     elif n == 100:
         print("Arduino: Currently Alive!")
         logging.info("Arduino: Device Healthy")
-    elif n == 110:
+    elif n == 101:
+        print("Arduino: Data Received!")
+        logging.info("Arduino: Data Received!")
+    elif n == 150:
         print("Arduino: Program Error!")
         logging.warning("Arduino: Program Error")
-    elif n == 115:
-        print("Arduino: Mechanical Error!")
-        logging.warning("Arduino: Mechanical Error")
+    elif n == 200:
+        print("Arduino: Movement Error!")
+        logging.warning("Arduino: Movement Error")
+    elif n == 201:
+        print("Arduino: Shooting Error!")
+        logging.warning("Arduino: Shooting Error") 
     else:
         print("Arduino Status Unknown")
         logging.info("Arduino Device Status Unknown.")
+        
+  
         
 #The below function setCoordinate deals with the parameters "x_coord" and "y_coord" with take in whatever coordinates are being received from
         #the machine vision. The values are then stored in a variable named "coord", where the string literal "f" is used to make it look
@@ -91,12 +113,15 @@ def main():
     count = 0 
     while True:
         setCoordinate(450, 0)
+        #UARTWrite("100")
         count +=1
         if count == 300:
             os.system('clear')
             count = 0
         statusCodes()
-        print(UARTRead())
+        #Printing ammo to test if its really global.
+        print(ammo)
+        #print(UARTRead())
 
 
 
@@ -116,7 +141,7 @@ if __name__ == "__main__":
     #If there is a ValueError or IOError, it will keep trying main until it becomes active again.
     except ValueError or IOError:
         while True:
-            time.sleep(0.5)
+            time.sleep(0.1)
             try:
                 print("Error 4 - Arduino Disconnected")
                 logging.warning("Arduino Device Disconnected.")
