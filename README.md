@@ -47,7 +47,7 @@ Herringbone gears were chosen for both pan and tilt axes for a number of reasons
 
 A plug-in for Fusion 360 called [GF Gear Generator](https://apps.autodesk.com/FUSION/en/Detail/Index?id=1236778940008086660&appLang=en&os=Win64) was used to generate the herringbone gears. \
 
-![GF_Gear_Screenshot](https://raw.githubusercontent.com/vinthund/UoGACE2022/ad4646d/Pan-TiltAssembly/Documentation/Assets/GF_Gear_Generator_Screenshot_Example.png)
+![GF_Gear_Screenshot](https://raw.githubusercontent.com/vinthund/UoGACE2022/ad4646d/Pan-TiltAssembly/Documentation/Assets/GF_Gear_Generator_Screenshot_Example.png) \
 This produces a finished gear as a body, which can then be adapted 
 
 The following parameters were found to produce gears with teeth that printed well and engaged with each other nicely.
