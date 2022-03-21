@@ -1,7 +1,18 @@
+#machine vision implementation
+#see readme for greater explanation
+#sian pugh sp3048k vinthund@github
+#version 1.0.0
+
 import numpy
 import cv2
+import smbus
+import flask
 
 video=cv2.VideoCapture(0)
+comms=smbus.SMBus(1)
+address=0x8
+regmode = 0x00
+ledout = 0x1d
 
 background=None
 #background is background of vision, used to subtract foreground for motion detection
@@ -36,4 +47,20 @@ while True:
         centerheight=height/2
         centerwidth=width/2
         #used to find center of rectangle
+        frameheight, framewidth = frame.shape[:2]
+        #find height and width of full image; first two values in frame array
+        centerframeheight=frameheight/2
+        centerframewidth=framewidth/2
+        #finds coordinates of middle of image
+        centerrectanglex=centerheight+x
+        centerrectangley=centerwidth+y
+        #finds coordinates of middle of rectange
+        xmove=centerrectanglex-frameheight
+        ymove=centerrectangley-frameheight
+        #difference between the two to send to arduino
+
+        values=[xmove, ymove]
+        bus.write_i2c_block_data(address, ledout, values)
+        #send via i2c to arduino
+    
         
