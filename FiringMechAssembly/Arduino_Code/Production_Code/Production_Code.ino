@@ -44,8 +44,8 @@ AccelStepper magStepper (motorInterfaceType, ci_magStepPin, ci_magDirPin);    //
 
 //Constants
 const int ci_dartPos[12] = { 250 , 568, 938, 1275, 1609, 1973, 2293, 2616, 2949, 3332, 3668, 3991 };
-const byte cb_servoIn = 130;
-const byte cb_servoOut = 10;
+const byte cb_servoIn = 140;
+const byte cb_servoOut = 0;
 const byte cb_vMaxPWM = 30;
 const int ci_motorSpinUpPeriod = 5000;
 const int ci_maxMagSpeed = 100;
@@ -133,7 +133,7 @@ void loop()
    */
   if(Serial.available()){
     s_received = Serial.readStringUntil('\n');
-    sscanf (s_received.c_str(), "%d %d %d", i_x, i_y, i_n); //Arrange received string into X, Y, and N ints
+    sscanf(s_received.c_str(), "%d %d %d", &i_x, &i_y, &i_n); //Arrange received string into X, Y, and N ints
     
     //Clip X and Y co-ordinates to within the normal scanning range
     if(i_x > i_panScanRange) {
@@ -150,12 +150,12 @@ void loop()
     }
     
     char message[50];
-    snprintf(message, strlen(message), "Targetting X: %d Y: %d -> %d darts", i_x, i_y, i_n);
+    snprintf(message, 50, "Targetting X: %d Y: %d -> %d darts", i_x, i_y, i_n);
     Serial.println(message);
 
     //Move Steppers to X and Y 
-    panStepper.moveTo(i_panHomeHallDetect + i_y);
-    tiltStepper.moveTo(i_tiltHomeHallDetect + i_x);
+    panStepper.moveTo(i_panHomeHallDetect + i_x);
+    tiltStepper.moveTo(i_tiltHomeHallDetect - i_y);
     while(panStepper.distanceToGo() + tiltStepper.distanceToGo() != 0) {
       panStepper.run();
       tiltStepper.run();
@@ -232,9 +232,9 @@ void spinDown() //Contains the function for spinning down the firing motors
 void fire() //Contains the function to fire the selected dart
 {
   magServo.write(cb_servoIn);
-  delay(400);
+  delay(500);
   magServo.write(cb_servoOut);
-  delay(400);
+  delay(500);
 }
 
 void homing_func() //Contains the function for homing the pan/tilt head
