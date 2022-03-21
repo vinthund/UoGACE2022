@@ -150,8 +150,17 @@ To fully use I2C, the Arduino and the Raspberry Pi's Python 3's libraries were u
 
 ## **Machine Vision Target Aquisition** - [vinthund](https://www.github.com/vinthund)
 
-***Add your summary of work here and delete this comment.***
+Motion Detection in Python 
+Version 1.0.0 
+Written By Sian Pugh, sp3045k@gre.ac.uk, fleetfootgreyhound@gmail.com, vinthund @ github
 
+Simple backend motion detector written in Python. Intended for use on a Jetson Nano 2gb to communicate with an Arduino system.
+
+Part of a larger project used to control an autonomous nerf sentry - https://github.com/vinthund/UoGACE2022
+
+Currently uses a subtractive method; it will take the first frame of input and store it as the "background", then compare all following frames to this. It has a threshold mechanism in place to ensure that small differences such as shadows are not seen as motion. When motion is detected using this subtractive method, a countour of the motion is drawn, as well as a retangle constructed of the area around it. This rectangle is used for specific targetting; the center is found and then compared to the center of the screen, with the results being sent to the arduino control unit using i2c. 
+
+Dependencies: This program requires the numpy and opencv packages to be installed to function. https://numpy.org/ https://opencv.org/
 <br>
 
 ## **Web Server and Website** - [rowBoat](https://www.github.com/rowboat)
