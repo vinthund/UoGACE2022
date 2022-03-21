@@ -1,6 +1,5 @@
-<?php 
-session_start();
-    $_SESSION;
+<?psession_start();
+ /*   $_SESSION;
     include("connection.php");
     include("functions.php");
 
@@ -35,7 +34,7 @@ session_start();
         }
     }
     
-
+*/
 ?>
 <!DOCTYPE html>
 <html>
