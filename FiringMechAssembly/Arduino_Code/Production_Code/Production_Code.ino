@@ -127,21 +127,41 @@ void loop()
    * After all homing, mech enters scanning function (else statement).
    * Instructions to fire can be sent to the mech via USB serial in the form "X Y N",
    * where X -> X co-ordinate, Y -> Y co-ordinate, N -> Number of darts to fire.
+   * If a co-ordinate is give outside of its normal scanning range movement will be limited to within that range.
    * Once complete the mech will re-enter the scanning function.
    * The b_darts variable tracks the number of darts fired and prevents firing if all darts are expelled.
    */
   if(Serial.available()){
     s_received = Serial.readStringUntil('\n');
-    sscanf (s_received.c_str(), "%d %d %d", i_x, i_y, i_n);
+    sscanf (s_received.c_str(), "%d %d %d", i_x, i_y, i_n); //Arrange received string into X, Y, and N ints
+    
+    //Clip X and Y co-ordinates to within the normal scanning range
+    if(i_x > i_panScanRange) {
+      i_x = i_panScanRange;
+    }
+    if(i_x < -i_panScanRange) {
+      i_x = -i_panScanRange;
+    }
+    if(i_y > i_tiltScanRange) {
+      i_y = i_tiltScanRange;
+    }
+    if(i_y < -i_tiltScanRange) {
+      i_y = -i_tiltScanRange;
+    }
+    
     char message[50];
     snprintf(message, strlen(message), "Targetting X: %d Y: %d -> %d darts", i_x, i_y, i_n);
     Serial.println(message);
+
+    //Move Steppers to X and Y 
     panStepper.moveTo(i_panHomeHallDetect + i_y);
     tiltStepper.moveTo(i_tiltHomeHallDetect + i_x);
     while(panStepper.distanceToGo() + tiltStepper.distanceToGo() != 0) {
       panStepper.run();
       tiltStepper.run();
     }
+
+    //Fire i_n number of darts
     spinUp();
     while(i_n != 0){
       if(b_darts < 12){
@@ -150,14 +170,14 @@ void loop()
         i_n--;
         b_darts++;
       }
-      else{
+      else{ //Catch if out of darts
         Serial.println("Run out of darts!!!");
         break;
       }
     }
     spinDown();
   }
-  else {
+  else { //Revert to scanning when no further commands remain
     scanning_func();
   }
 }
