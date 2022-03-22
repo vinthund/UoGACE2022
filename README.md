@@ -201,8 +201,6 @@ Above mentioned items were used to shorten a ethernet cable to connect Raspberry
 
 
 
-
-
 <br>
 
 ## **Machine Vision Target Aquisition** - [vinthund](https://www.github.com/vinthund)
