@@ -181,18 +181,17 @@ Dependencies: This program requires the numpy and opencv packages to be installe
 ## **Web Server and Website** - [rowBoat](https://www.github.com/rowboat)
 
 The website consist:
+Was constructed using the php files in order to connection and retrieve data from the mysql server.
 * The Login page - the first page that the user will see
-* The Home page - once the user has logged in this is the next page that they will be greeted by. this page will consist of the window to the view the live video feed from the turret and button the turret. 
-* The Device page - this page can be accessed by the corresponding link in the navigation bar at the top of the screen. This page is just for show but could be used to add more devices.
-* The Help page
+* The Home page - once the user has logged in this is the next page that they will be greeted by. this page will consist of the window to the view the live video feed from the turret, a reading of how much bullets are left anda button for manual control. 
 * A link to the github repository
-All pages besides the login page have a navigation bar to navigate to the other pages on the website, the sign out button, and the link to the github repository.
 
 Webserver
 OS: Ubuntu
 Wireless or wired: wireless
+Configured in a lemp stack using nginx, mysql and php
 Created to:
-* Store learning files for machine learning
+* Host the website
 * Store login information
 * Store and Retrieve video feed and bullet count from the camera and jetson so it could be displayed on the website and app
 * Stores and sends button click to the jetson so when turret reacted to the corresponding button input.
