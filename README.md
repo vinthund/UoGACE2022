@@ -22,8 +22,11 @@ Mechanical parts of this project are mostly custom using standard industry parts
 - [rowBoat](https://www.github.com/rowboat)
 <br>
 
+ ## **Viva Video**
 
-## **Firing Mechanism Mechanical Design** - [Chris Halsall - ch6941r](https://www.github.com/ch6941r)
+[![Viva_Video_Thumbnail](https://github.com/vinthund/UoGACE2022/blob/ad4646d/Project%20Management%20Documentation/Viva_Video_Thumbnail.png)](https://youtu.be/HJBah1AWvD8)
+
+ ## **Firing Mechanism Mechanical Design** - [Chris Halsall - ch6941r](https://www.github.com/ch6941r)
 
 The firing mechanism contains a few pre-made parts including a small stepper motor, the firing motors and barrel, a servo, and a bearing. All other parts have been designed in Fusion 360 and printed in orange PLA on an Ender 3 FDM 3D printer. It features a 12 dart rotary magazine driven by the stepper motor from one end and supported by a bearing at the other end. Through the bearing is mounted a magnet and a magnetic position sensor so that the control electronics can measure the angle of the magazine. A servo is mounted in the base and, with a custom arm, is capable of pushing a dart from the magazine into the firing motors and thus propelling it out of the barrel. A mounting plate is attached to the front of the design to securely mount the camera for machine vision. Finally, a hole and hex slot has been designed in to allow for easy mounting to the pan/tilt mehcanism.
 
@@ -43,7 +46,8 @@ Herringbone gears were chosen for both pan and tilt axes for a number of reasons
 ![Herringbone_Gears](https://raw.githubusercontent.com/vinthund/UoGACE2022/main/Pan-TiltAssembly/Documentation/Assets/Herringbone_Gears.jpg)
 
 A plug-in for Fusion 360 called [GF Gear Generator](https://apps.autodesk.com/FUSION/en/Detail/Index?id=1236778940008086660&appLang=en&os=Win64) was used to generate the herringbone gears. \
-![GF_Gear_Screenshot](https://raw.githubusercontent.com/vinthund/UoGACE2022/ad4646d/Pan-TiltAssembly/Documentation/Assets/GF_Gear_Generator_Screenshot_Example.png)
+
+![GF_Gear_Screenshot](https://raw.githubusercontent.com/vinthund/UoGACE2022/ad4646d/Pan-TiltAssembly/Documentation/Assets/GF_Gear_Generator_Screenshot_Example.png) \
 This produces a finished gear as a body, which can then be adapted 
 
 The following parameters were found to produce gears with teeth that printed well and engaged with each other nicely.
@@ -113,7 +117,7 @@ The bottom of the board is dedicated to power rails, 0V and 12V from an external
 
 Some additional capacitors and a diode help to reduce input shock current (and therefore prevent brownout) and reverse power connection damage.
 
-![Control Circuitry](/Schematics/circuitry_photo.jpg)
+![Control Circuitry](https://github.com/ch6941r/UoGACE2022/blob/main_ch6941r/Schematics/circuitry_photo.jpg)
 
 <br>
 
@@ -125,6 +129,7 @@ Some additional capacitors and a diode help to reduce input shock current (and t
 * Four Male to Female Jumper wires
 * Four Male to Male Jumper wires
 * Logic Level Shifter: Bi-Directional Module (Between 3V3 and 5V)
+* Ethernet Cable: To allow for ssh into Pi to script in Python.
 
 In order to make the control of the Firing Mechanism possible through communication between the Jetson Nano and the Arduino (shown on above diagram), a communications protocol had to be utilised. Types of communications protocols, such as I2C(Inter-Integrated Circuit), USB(Universal Serial Bus) Serial and SPI(Serial Peripheral Interface) were each investigated to see which would work efficiently when communicating between a Jetson Nano and an Arduino. As a Jetson Nano was not in possession, a Raspberry Pi was instead used to just simulate how certain communications protocols would work with each other.
 
@@ -132,14 +137,24 @@ The first iteration of a communications code between the Arduino and the Raspber
 
 Other protocols such as I2C and SPI were explored. According to research, when comparing between I2C and SPI, SPI was a faster option; this did not mean it could be instantly utilised though, as not enough examples of communication between an Arduino and a Jetson/Pi could be found online to make use of SPI. Furthermore, it required more wires to be connected to the Nano through a logic level shifter. Due to this, I2C was settled with. 
 
+This, was initially the case, on utilising I2C Communication to transmit data between the Raspberry Pi and the Arduino. Unfortunately though, as the gun firing mech used a sensor which required the Arduino to be a master over I2C, this idea of using I2C could not be applied. Providentially, there was another type of communications I had found through research, named Serial UART. Serial UART, according to research, is a "hardware communication protocol" that uses "asynchronous serial communication", meaning that unlike I2C, it does not have to synchronise to a clock signal. UART was made possible with a library named **SoftwareSerial** on the Arduino, and a library named **Serial** on Python were used to replace the original I2C system implemented.
+
 **Setup**
 
+[I2C]
 The Arduino's SDA (Serial Data) was connected to the High Voltage(HV) pin 1, SCL (Serial Clock) at HV2, Arduino 5V at the HV input pin and Arduino Ground to the shifter's Ground. These were connected to the High Voltage due to the Arduino operating at an output of 5V.
 
 The Raspberry Pi's SDA was connected on Low Voltage pin 1, opposite that of the Arduino's SDA connection; SCL was connected to LV2, 3V3 at LV input and Pi Ground to the shifter's ground. The Pi was connected to the Low Voltage side due to the Pi's output voltage being 3V3.
 
 To fully use I2C, the Arduino and the Raspberry Pi's Python 3's libraries were used, being ***wire*** and ***smbus2*** libraries respectively.
+
+[UART]
+SoftwareSerial's library allows for the creation of Rx Tx pins over any digital pins, so 2 and 3 were selected in this case. Pin 2, Rx, was connected to HV1 of the logic level shifter; Pin 3 Tx was connected to HV2. Arduino 5V was connected to the HV of the Level Shifter, along with Arduino Ground connected to the component's ground. Similar steps were taken on the opposite side, with the Raspberry Pi's Tx on pin 8 connected on the opposite of the Arduino's Rx. Same followed for the Pi's pin 10 Rx connected opposite the Arduino's Tx on the shifter. The Pi's 3V3 Power was connected to LV, along with the Pi's ground connected to the component's ground.
+
 ![I22ImagePiArduino](https://user-images.githubusercontent.com/48869133/157861137-2b457d97-22b6-4f79-860c-77544ec5475e.jpg)
+
+![UARTExample](https://user-images.githubusercontent.com/48869133/158718321-f61861dc-86f8-4079-bac4-c2d13c3c3fba.jpg)
+
 <br>
 
 ##  I2C Communicatons , Jetson Nano  - [ht5640k- Harshitha Thimmegowda ](https://www.github.com/ht5640k)
@@ -192,25 +207,33 @@ Above mentioned items were used to shorten a ethernet cable to connect Raspberry
 
 ## **Machine Vision Target Aquisition** - [vinthund](https://www.github.com/vinthund)
 
-***Add your summary of work here and delete this comment.***
+Motion Detection in Python Version 1.0.0 
+Written By Sian Pugh, sp3045k@gre.ac.uk, fleetfootgreyhound@gmail.com, vinthund @ github
+
+Simple backend motion detector written in Python. Intended for use on a Jetson Nano 2gb to communicate with an Arduino system.
+
+Part of a larger project used to control an autonomous nerf sentry - https://github.com/vinthund/UoGACE2022
+
+Currently uses a subtractive method; it will take the first frame of input and store it as the "background", then compare all following frames to this. It has a threshold mechanism in place to ensure that small differences such as shadows are not seen as motion. When motion is detected using this subtractive method, a countour of the motion is drawn, as well as a retangle constructed of the area around it. This rectangle is used for specific targetting; the center is found and then compared to the center of the screen, with the results being sent to the arduino control unit using i2c.
+
+Dependencies: This program requires the numpy and opencv packages to be installed to function. https://numpy.org/ https://opencv.org/
 
 <br>
 
 ## **Web Server and Website** - [rowBoat](https://www.github.com/rowboat)
 
 The website consist:
+Was constructed using the php files in order to connection and retrieve data from the mysql server.
 * The Login page - the first page that the user will see
-* The Home page - once the user has logged in this is the next page that they will be greeted by. this page will consist of the window to the view the live video feed from the turret and button the turret. 
-* The Device page - this page can be accessed by the corresponding link in the navigation bar at the top of the screen. This page is just for show but could be used to add more devices.
-* The Help page
+* The Home page - once the user has logged in this is the next page that they will be greeted by. this page will consist of the window to the view the live video feed from the turret, a reading of how much bullets are left anda button for manual control. 
 * A link to the github repository
-All pages besides the login page have a navigation bar to navigate to the other pages on the website, the sign out button, and the link to the github repository.
 
 Webserver
 OS: Ubuntu
 Wireless or wired: wireless
+Configured in a lemp stack using nginx, mysql and php
 Created to:
-* Store learning files for machine learning
+* Host the website
 * Store login information
 * Store and Retrieve video feed and bullet count from the camera and jetson so it could be displayed on the website and app
 * Stores and sends button click to the jetson so when turret reacted to the corresponding button input.
