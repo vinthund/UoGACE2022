@@ -170,6 +170,8 @@ Items used
 
 Above mentioned items were used to setup a to make an effictive communication to get the hardware working The Arduino's SDA (Serial Data) was connected to the High Voltage(HV) pin 1, SCL (Serial Clock) at HV2, Arduino 5V at the HV input pin and Arduino Ground to the shifter's Ground. These were connected to the High Voltage due to the Arduino operating at an output of 5V.
 The Raspberry Pi's SDA was connected on Low Voltage pin 1, opposite that of the Arduino's SDA connection; SCL was connected to LV2, 3V3 at LV input and Pi Ground to the shifter's ground. The Pi was connected to the Low Voltage side due to the Pi's output voltage being 3V3 to get the RapberryPi and Arduino communicating.
+![20220315_164032](https://user-images.githubusercontent.com/92383132/159386133-138882af-c237-4338-9208-c3437ec3124e.jpg)
+
 
 **Shortening of ethernet cable**
 
@@ -179,8 +181,9 @@ Items used
 * Crimping tool
 * Cable Connectors
 
-
 Above mentioned items were used to shorten a ethernet cable to connect RaspberryPi and Jetson nano, It was done by cutting the available ethernet cable to the required length using a crimping tool and then pushing the wires into the cable connecter. Shortening was required in order to meet the hardware modeling requirement and to adjust the length of the ethernet cable connection very small and convenient.
+![Screenshot_20220318-221013_Snapchat](https://user-images.githubusercontent.com/92383132/159386021-ea0ecef6-c11d-4df2-83c2-d72cdad20153.jpg)
+
 
 
 
