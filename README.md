@@ -142,9 +142,9 @@ To fully use I2C, the Arduino and the Raspberry Pi's Python 3's libraries were u
 ![I22ImagePiArduino](https://user-images.githubusercontent.com/48869133/157861137-2b457d97-22b6-4f79-860c-77544ec5475e.jpg)
 <br>
 
-## ** I2C Communicatons , Jetson Nano ** - [ht5640k- Harshitha Thimmegowda ](https://www.github.com/ht5640k)
+##  I2C Communicatons , Jetson Nano  - [ht5640k- Harshitha Thimmegowda ](https://www.github.com/ht5640k)
 
-** Jetson NANO **
+ **Jetson NANO** 
 
 Items used
 
@@ -157,7 +157,7 @@ To get the Jetson Nano started:
 * Aliases were created to make abrieviation to soomthen the further procedures.
 * Created /etc/network/interfaces  
 
-** I2C communications **
+**I2C communications**
 
 Items used
 
@@ -171,7 +171,7 @@ Items used
 Above mentioned items were used to setup a to make an effictive communication to get the hardware working The Arduino's SDA (Serial Data) was connected to the High Voltage(HV) pin 1, SCL (Serial Clock) at HV2, Arduino 5V at the HV input pin and Arduino Ground to the shifter's Ground. These were connected to the High Voltage due to the Arduino operating at an output of 5V.
 The Raspberry Pi's SDA was connected on Low Voltage pin 1, opposite that of the Arduino's SDA connection; SCL was connected to LV2, 3V3 at LV input and Pi Ground to the shifter's ground. The Pi was connected to the Low Voltage side due to the Pi's output voltage being 3V3 to get the RapberryPi and Arduino communicating.
 
-** Shortening of ethernet cable **
+**Shortening of ethernet cable**
 
 Items used
 
